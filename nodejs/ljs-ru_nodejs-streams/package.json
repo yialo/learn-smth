@@ -1,0 +1,14 @@
+{
+  "name": "learn_nodejs-streams",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon ./writable"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yialo/learn_nodejs-streams.git"
+  },
+  "devDependencies": {
+    "nodemon": "2.0.7"
+  }
+}

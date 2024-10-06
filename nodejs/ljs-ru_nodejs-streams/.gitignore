@@ -1,0 +1,6 @@
+# Service files
+*.log*
+
+# NPM files
+node_modules/
+npm-debug.*
