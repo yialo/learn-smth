@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Learn Mocha</title>
+    <link rel="stylesheet" href="./libs/mocha@7.0.0.min.css">
+  </head>
+
+  <body>
+    <h1>Let's test some JS code with Mocha and Chai!</h1>
+    <div id="mocha"></div>
+
+    <script src="./libs/mocha@7.0.0.min.js"></script>
+    <script src="./libs/chai@4.2.0.min.js"></script>
+    <script>
+      const { assert } = chai;
+      mocha.setup('bdd');
+    </script>
+    <script src="./pow.js"></script>
+    <script src="./pow.test.js"></script>
+    <script>
+      mocha.run();
+    </script>
+  </body>
+</html>
