@@ -1,0 +1,15 @@
+{
+  "name": "learn_wes-bos-js-30-days-challenge",
+  "private": true,
+  "scripts": {
+    "start": "live-server"
+  },
+  "devDependencies": {
+    "live-server": "1.2.1"
+  },
+  "homepage": "https://JavaScript30.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yialo/learn_wes-bos-js-30-days-challenge.git"
+  }
+}
