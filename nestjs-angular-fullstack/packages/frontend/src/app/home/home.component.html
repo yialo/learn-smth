@@ -1,0 +1,49 @@
+<div class="flights">
+  <div class="flights__wrapper">
+    <h1 class="flights__heading">Find flight</h1>
+
+    <div class="flights__inner">
+      <form class="form flights__form" #form="ngForm" (ngSubmit)="query(form)" novalidate>
+        <select class="form__field" ngModel name="origin" aria-label="Choose origin">
+          <option value="" disabled hidden selected>from</option>
+          <option *ngFor="let origin of origins">{{ origin }}</option>
+        </select>
+
+        <select class="form__field" ngModel name="destination" aria-label="Choose destination">
+          <option value="" disabled hidden selected>to</option>
+          <option *ngFor="let destination of destinations">{{ destination }}</option>
+        </select>
+
+        <button class="button form__button" type="submit">
+          Go
+        </button>
+      </form>
+
+      <div class="flights__scroll-box">
+        <div class="flights__scroll-content" role="table">
+          <div class="flight flight_header" role="row">
+            <div role="columnheader">Flight #</div>
+            <div role="columnheader">Origin</div>
+            <div role="columnheader">Destination</div>
+            <div role="columnheader">Departs</div>
+            <div role="columnheader">Arrives</div>
+            <div role="columnheader">Nonstop</div>
+          </div>
+
+          <div *ngFor="let flight of flights" class="flight" role="row">
+            <div role="gridcell">{{ flight.flight_number }}</div>
+            <div role="gridcell">{{ flight.origin }}</div>
+            <div role="gridcell">{{ flight.destination }}</div>
+            <div role="gridcell">
+              {{ flight.depart | date: 'full' }}
+            </div>
+            <div role="gridcell">
+              {{ flight.arrive | date: 'full' }}
+            </div>
+            <div role="gridcell">{{ flight.nonstop }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

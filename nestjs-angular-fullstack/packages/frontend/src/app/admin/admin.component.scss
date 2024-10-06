@@ -1,0 +1,116 @@
+.admin {
+  display: grid;
+  justify-items: center;
+  padding: 1rem;
+
+  &__table {
+    margin-bottom: 2rem;
+  }
+}
+
+.table {
+  max-width: 100%;
+  overflow: auto;
+  padding: 1rem;
+  background-color: white;
+  box-shadow: 2px 4px 6px rgb(black, 0.5);
+
+  &__body {
+    border-collapse: collapse;
+  }
+
+  &__caption {
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+  }
+
+  &__cell {
+    border: 1px solid black;
+    padding: 0.25rem;
+  }
+
+  &__field {
+    width: 100%;
+  }
+
+  &__button {
+    display: block;
+    width: 100%;
+    border: 1px solid #000;
+    padding: 0.25rem 0.75rem;
+    cursor: pointer;
+
+    &_update {
+      background-color: yellow;
+
+      &:hover {
+        background-color: lightgoldenrodyellow;
+      }
+    }
+
+    &_delete {
+      background-color: red;
+
+      &:hover {
+        background-color: lightcoral;
+      }
+    }
+  }
+}
+
+.form {
+  display: grid;
+  justify-items: start;
+  row-gap: 1rem;
+  max-width: 100%;
+  overflow: auto;
+  padding: 1.5rem 1rem;
+  background-color: white;
+  box-shadow: 2px 4px 6px rgb(black, 0.5);
+
+  &__tip {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: 1.5rem;
+  }
+
+  &__label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__field {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    font-size: 1.25rem;
+  }
+
+  &__checkbox {
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+  }
+
+  &__checkbox-field {
+    margin-right: 0.5rem;
+  }
+
+  &__button {
+    margin-top: 0.25rem;
+    border-style: none;
+    padding: 0.5rem 1.5rem;
+    font-size: 1.25rem;
+    background-color: white;
+    box-shadow: 2px 4px 6px rgb(black, 0.5);
+
+    &:hover {
+      background-color: lightblue;
+    }
+
+    &:active {
+      background-color: lightgrey;
+    }
+  }
+}

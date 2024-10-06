@@ -1,0 +1,80 @@
+<div class="admin">
+  <div class="table admin__table">
+    <table class="table__body">
+      <caption class="table__caption">Flights</caption>
+
+      <thead>
+        <tr>
+          <th class="table__cell">Flight #</th>
+          <th class="table__cell">Origin</th>
+          <th class="table__cell">Destination</th>
+          <th class="table__cell">Depart</th>
+          <th class="table__cell">Arrive</th>
+          <th class="table__cell">Nonstop</th>
+          <th class="table__cell">Update?</th>
+          <th class="table__cell">Delete?</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let flight of flights, let i = index">
+          <td class="table__cell">
+            <input class="table__field" type="text" [(ngModel)]="flight.flight_number">
+          </td>
+          <td class="table__cell">
+            <input class="table__field" type="text" [(ngModel)]="flight.origin">
+          </td>
+          <td class="table__cell">
+            <input class="table__field" type="text" [(ngModel)]="flight.destination">
+          </td>
+          <td class="table__cell">{{ flight.depart }}</td>
+          <td class="table__cell">{{ flight.arrive }}</td>
+          <td class="table__cell">
+            <input class="table__checkbox" type="checkbox" [(ngModel)]="flight.nonstop">
+          </td>
+          <td class="table__cell">
+            <button class="table__button table__button_update" type="button"
+              (click)="updateFlight(flight)">Go</button>
+          </td>
+          <td class="table__cell">
+            <button class="table__button table__button_delete" type="button"
+              (click)="deleteFlight(flight.id)">Go</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <form class="form admin__form" #creatorForm="ngForm" (ngSubmit)="createFlight(creatorForm)"
+    novalidate>
+    <p class="form__tip">Add a Flight</p>
+
+    <input class="form__field" type="text" aria-label="Specify origin" placeholder="Origin" ngModel
+      name="origin">
+
+    <input class="form__field" type="text" aria-label="Specify destination"
+      placeholder="Destination" ngModel name="destination">
+
+    <input class="form__field" type="number" aria-label="Specify flight number"
+      placeholder="Flight number" ngModel name="flight_number">
+
+    <label class="form__label" aria-label="Specify depart">
+      Depart
+      <input class="form__field" type="datetime-local" ngModel name="depart">
+    </label>
+
+    <label class="form__label" aria-label="Specify depart">
+      Arrive
+      <input class="form__field" type="datetime-local" ngModel name="arrive">
+    </label>
+
+    <label class="form__checkbox" aria-label="Specify is nonstop or not">
+      <input class="form__checkbox-field" type="checkbox" ngModel name="nonstop">
+      Nonstop
+    </label>
+
+    <button class="form__button" type="submit">
+      Create
+    </button>
+  </form>
+</div>
