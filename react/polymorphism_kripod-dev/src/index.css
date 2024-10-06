@@ -1,0 +1,50 @@
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  color-scheme: light dark;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: black;
+  background-color: white;
+}
+
+.wrapper {
+  display: flex;
+  column-gap: 1rem;
+  padding: 1rem;
+}
+
+.my-button {
+  --bg-color: #a1e3e6;
+  height: 40px;
+  border: 1px solid gray;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 1.25rem;
+  line-height: 1;
+  text-wrap: nowrap;
+  text-decoration-line: none;
+  color: black;
+  background-color: var(--bg-color);
+  cursor: pointer;
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--bg-color) 75%, rgb(0 0 0 / 0));
+  }
+}
