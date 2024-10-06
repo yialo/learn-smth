@@ -1,0 +1,13 @@
+{
+  "name": "security_lesson_4-6",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "serve"
+  },
+  "devDependencies": {
+    "@awmottaz/prettier-plugin-void-html": "1.5.0",
+    "prettier": "3.2.5",
+    "serve": "14.2.3"
+  }
+}
