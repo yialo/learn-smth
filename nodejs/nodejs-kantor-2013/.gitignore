@@ -1,0 +1,10 @@
+# Service files
+*.log*
+bash.exe.stackdump
+
+# NPM files
+node_modules/
+npm-debug.*
+
+# Project distributive folder
+dist/

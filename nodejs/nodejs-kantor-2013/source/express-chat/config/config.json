@@ -1,0 +1,20 @@
+{
+  "port": 3030,
+  "mongoose": {
+    "uri": "mongodb://localhost:27017/chat",
+    "options": {
+      "useCreateIndex": true,
+      "useNewUrlParser": true,
+      "useUnifiedTopology": true
+    }
+  },
+  "session": {
+    "secret": "thisIsNode",
+    "cookie": {
+      "path": "/",
+      "httpOnly": true,
+      "secure": false,
+      "maxAge": null
+    }
+  }
+}

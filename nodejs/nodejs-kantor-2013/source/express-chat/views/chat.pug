@@ -1,0 +1,29 @@
+extends _layout
+
+block title
+  = 'Chat | '
+
+block content
+  include ./_nav.pug
+
+  main.chat-room
+    h1 Чат
+    if error
+      p.chat-room__error-message= error.message
+      a.chat-room__login-link(href='/login') Login
+
+    else if user
+      p.chat-room__status Устанавливаем соединение...
+      p
+        = 'Пользователь: '
+        span.chat-room__username #{user.get('username')}
+      div.chat-room__message-area
+        p.chat-room__empty Сообщений нет
+      form
+        label.chat-room__field(aria-label='Новое сообщение')
+          input.chat-room__input(type='text', autofocus placeholder='Сообщение...')
+      p.chat-room__alert
+
+  if !error && user
+    script(src='/socket.io/socket.io.js')
+    script(type='module', src='/js/chat.js')

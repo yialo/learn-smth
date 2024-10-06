@@ -1,0 +1,11 @@
+{
+  "name": "learn_nodejs-kantor-2013",
+  "private": true,
+  "dependencies": {
+    "yargs": "16.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yialo/learn_nodejs-kantor-2013.git"
+  }
+}
