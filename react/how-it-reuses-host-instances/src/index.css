@@ -1,0 +1,23 @@
+h1,
+p {
+  font-family: Lato;
+}
+
+@keyframes animateText {
+  from {
+    color: red;
+  }
+
+  to {
+    color: green;
+  }
+}
+
+.animated {
+  font-size: 2rem;
+  animation-name: animateText;
+  animation-timing-function: linear;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
