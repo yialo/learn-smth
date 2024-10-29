@@ -1,44 +1,8 @@
 import * as React from 'react';
 import { useSyncExternalStoreWithSelector } from 'use-sync-external-store/with-selector';
 
-const useStrictContext = <V,>(
-  Context: React.Context<V>,
-  errorMessage?: string,
-) => {
-  const value = React.useContext(Context);
-
-  if (value === undefined) {
-    throw new Error(
-      errorMessage || 'Hook must be used within a ContextProvider',
-    );
-  }
-
-  return value;
-};
-
-type Store<T> = {
-  subscribe: (onStoreUpdate: () => void) => () => void;
-  getState: () => T;
-  setState: (nextState: T) => void;
-};
-
-const createStore = <T,>(initialState: T): Store<T> => {
-  let state = initialState;
-
-  const listeners = new Set<() => void>();
-
-  return {
-    subscribe: (onStoreUpdate: () => void) => {
-      listeners.add(onStoreUpdate);
-      return () => listeners.delete(onStoreUpdate);
-    },
-    getState: () => state,
-    setState: (nextState: T) => {
-      state = nextState;
-      listeners.forEach((listener) => listener());
-    },
-  };
-};
+import { useStrictContext } from './strict-context';
+import { Store, createStore } from './store';
 
 type ContextWithSelector<T> = React.Context<Store<T> | undefined> & {
   useSelector: <R>(selector: (state: T) => R) => R;
