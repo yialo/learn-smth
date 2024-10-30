@@ -2,6 +2,6 @@
   @see {@link https://learn.javascript.ru/task/filter-range}
  */
 
-export const filterRange = (arr, min, max) => {
-  return arr.filter((num) => min <= num && num <= max);
+export const filterRange = (numArr, min, max) => {
+  return numArr.filter((num) => num >= min && num <= max);
 };

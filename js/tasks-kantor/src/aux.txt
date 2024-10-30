@@ -1,3 +1,20 @@
 /**
   @see {@link }
  */
+
+describe('', () => {
+  test('just works', () => {
+    const result = '';
+    const expected = '';
+    expect(result).toEqual(expected);
+  });
+});
+
+describe('', () => {
+  test.for([
+    [],
+  ])('', ([]) => {
+    const result = '';
+    expect(result).toBe(expected);
+  });
+});
