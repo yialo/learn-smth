@@ -10,28 +10,32 @@ export const getMaxSubSumSlow = (arr) => {
   let maxSum = 0;
 
   for (let i = 0; i < arr.length; i++) {
-    let partialSum = 0;
+    let currentSum = 0;
 
     for (let j = i; j < arr.length; j++) {
-      partialSum += arr[j];
-      maxSum = Math.max(maxSum, partialSum);
+      currentSum += arr[j];
+      maxSum = Math.max(maxSum, currentSum);
     }
   }
 
   return maxSum;
 };
 
+/** Kadane's algorithm
+  @see {@link https://en.wikipedia.org/wiki/Maximum_subarray_problem#Kadane's_algorithm}
+*/
 export const getMaxSubSumFast = (arr) => {
   let maxSum = 0;
-  let partialSum = 0;
+  let currentSum = 0;
 
-  for (const item of arr) {
-    partialSum += item;
+  for (const element of arr) {
+    currentSum += element;
 
-    if (partialSum >= 0) {
-      maxSum = Math.max(maxSum, partialSum);
+    if (currentSum >= 0) {
+      maxSum = Math.max(maxSum, currentSum);
     } else {
-      partialSum = 0;
+      // Reset, because the currentSum has already become less and cannot be a solution
+      currentSum = 0;
     }
   }
 

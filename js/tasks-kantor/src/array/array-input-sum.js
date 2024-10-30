@@ -19,3 +19,5 @@ export const sumInput = () => {
 
   alert(`Сумма введённых чисел: ${sum}`);
 };
+
+sumInput();

@@ -1,4 +1,4 @@
-import { describe, test, expect } from 'vitest';
+import { describe, assert, test, expect } from 'vitest';
 
 import { getMaxSubSumSlow, getMaxSubSumFast } from './maximal-subarray';
 

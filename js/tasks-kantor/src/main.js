@@ -1,3 +1,3 @@
 import './style.css';
 
-// import './number/sum-interface';
+// import './array/array-input-sum';
