@@ -2,12 +2,10 @@ import { describe, test, expect } from 'vitest';
 
 import { checkSpam } from './check-spam';
 
-describe('checkSpam', () => {
-  test.each([
-    ['buy ViAgRA now', true],
-    ['free xxxxx', true],
-    ['innocent rabbit', false],
-  ])('should check for spam string "%s"', (str, expected) => {
-    expect(checkSpam(str)).toBe(expected);
-  });
+test.each([
+  ['buy ViAgRA now', true],
+  ['free xxxxx', true],
+  ['innocent rabbit', false],
+])('should check for spam string "%s"', (str, expected) => {
+  expect(checkSpam(str)).toBe(expected);
 });

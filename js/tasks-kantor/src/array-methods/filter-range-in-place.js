@@ -2,7 +2,7 @@
   @see {@link https://learn.javascript.ru/task/filter-range-in-place}
  */
 
-const withCounter = (numArr, min, max) => {
+const viaCounter = (numArr, min, max) => {
   let elementsToRemoveCount = 0;
 
   const needRemove = (num) => num < min || num > max;
@@ -20,7 +20,7 @@ const withCounter = (numArr, min, max) => {
   return numArr;
 };
 
-const withWhile = (numArr, min, max) => {
+const viaWhile = (numArr, min, max) => {
   const needRemove = (num) => num < min || num > max;
 
   let nextIndexToRemove;
@@ -39,7 +39,23 @@ const withWhile = (numArr, min, max) => {
   return numArr;
 };
 
+const viaForLoop = (numArr, min, max) => {
+  const needRemove = (num) => num < min || num > max;
+
+  for (let i = 0; i < numArr.length; i++) {
+    const num = numArr[i];
+
+    if (needRemove(num)) {
+      numArr.splice(i, 1);
+      i--;
+    }
+  }
+
+  return numArr;
+};
+
 export const filterRangeInPlace = {
-  withCounter,
-  withWhile,
+  viaCounter,
+  viaWhile,
+  viaForLoop,
 };

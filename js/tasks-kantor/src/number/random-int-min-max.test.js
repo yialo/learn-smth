@@ -2,11 +2,14 @@ import { describe, test, expect } from 'vitest';
 
 import { randomInteger } from './random-int-min-max';
 
-describe('Random integer min-max', () => {
-  test('should return random integer', () => {
-    const result = randomInteger(1, 1.5);
-    const expected = 1;
+test('should throw if arguments are not integer', () => {
+  expect(() => randomInteger(1, 2.5)).toThrowError();
+  expect(() => randomInteger(1.2, 4)).toThrowError();
+});
 
-    expect(result).toBe(expected);
-  });
+test('should return random integer', () => {
+  const result = randomInteger(1, 3);
+
+  expect(result).toBeGreaterThanOrEqual(1);
+  expect(result).toBeLessThanOrEqual(3);
 });
