@@ -1,16 +1,14 @@
-/**
-  @see {@link }
- */
+import { test, expect } from 'vitest';
 
 test('just works', () => {
   const result = '';
   const expected = '';
-  expect(result). (expected);
+  expect(result).to...(expected);
 });
 
 test.for([
   [],
 ])('', ([]) => {
   const result = '';
-  expect(result). (expected);
+  expect(result).to...(expected);
 });
