@@ -1,0 +1,37 @@
+.app {
+  font-family: sans-serif;
+}
+
+.todoList {
+  display: grid;
+  justify-content: start;
+  row-gap: 0.5rem;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style-type: none;
+}
+
+.todoItem {
+  display: flex;
+  align-items: center;
+  border: 1px solid black;
+  padding: 0.5rem;
+
+  &::after {
+    content: 'X';
+    margin-left: 0.5rem;
+    width: 0.75rem;
+    border: 1px solid gray;
+    border-radius: 50%;
+    padding: 4px;
+    font-size: 0.75rem;
+    line-height: 1;
+    text-align: center;
+    color: red;
+  }
+}
+
+.empty {
+  font-style: italic;
+}
