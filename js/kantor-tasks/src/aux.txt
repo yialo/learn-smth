@@ -1,0 +1,16 @@
+/**
+  @see {@link }
+ */
+
+test('just works', () => {
+  const result = '';
+  const expected = '';
+  expect(result). (expected);
+});
+
+test.for([
+  [],
+])('', ([]) => {
+  const result = '';
+  expect(result). (expected);
+});
