@@ -8,8 +8,10 @@ test('should throw if arguments are not integer', () => {
 });
 
 test('should return random integer', () => {
-  const result = randomInteger(1, 3);
+  for (let i = 1; i <= 10; i++) {
+    const result = randomInteger(1, 3);
 
-  expect(result).toBeGreaterThanOrEqual(1);
-  expect(result).toBeLessThanOrEqual(3);
+    expect(result).toBeGreaterThanOrEqual(1);
+    expect(result).toBeLessThanOrEqual(3);
+  }
 });
