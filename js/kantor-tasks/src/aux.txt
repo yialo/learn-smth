@@ -1,6 +1,7 @@
 import { test, expect } from 'vitest';
 
 test('just works', () => {
+  const input = '';
   const result = '';
   const expected = '';
   // expect(result).to...(expected);
