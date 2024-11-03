@@ -1,0 +1,12 @@
+#!/bin/bash
+
+user=bob
+if grep $user /etc/passwd
+then
+echo "The user $user exists"
+elif grep john /etc/passwd
+then
+echo "The user john exists"
+else
+echo "Users $user and john don't exist"
+fi
