@@ -1,0 +1,7 @@
+#!/bin/bash
+echo "Homedir of current user: $HOME"
+echo "This costs \$1"
+
+person="Bob"
+grade=5
+echo "$person is a good student, his grade is $grade"

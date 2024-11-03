@@ -1,0 +1,7 @@
+#!/bin/bash
+
+currentdir1=`pwd`
+echo "My dir is $currentdir1"
+
+currentdir2=$(pwd)
+echo "My dir is $currentdir2"
