@@ -7,5 +7,5 @@ import { Session } from './config';
 export const SessionContext = createStrictContext<Session>();
 
 export const useUserId = () => {
-  return useStrictContext(SessionContext, 'Session').userId;
+  return useStrictContext(SessionContext).userId;
 };

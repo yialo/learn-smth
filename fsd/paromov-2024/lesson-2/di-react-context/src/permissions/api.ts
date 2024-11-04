@@ -7,10 +7,7 @@ import { PermissionsApiClient } from './config';
 export const PermissionsContext = createStrictContext<PermissionsApiClient>();
 
 export const usePermissions = () => {
-  const { getPermissions } = useStrictContext(
-    PermissionsContext,
-    'Permissions',
-  );
+  const { getPermissions } = useStrictContext(PermissionsContext);
 
   return {
     async can(userId: string, action: string) {

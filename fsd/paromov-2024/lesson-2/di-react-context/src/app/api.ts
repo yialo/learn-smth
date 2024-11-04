@@ -7,9 +7,9 @@ import {
 import { Task, TaskAction, TasksApiClient } from '../tasks';
 
 const permissionsRepository = new DbRepository<Permission>([
-  { id: '1', actions: ['add', 'view', 'delete'], subject: 'user-1' },
-  { id: '2', actions: ['view'], subject: 'user-2' },
-  { id: '3', actions: [], subject: 'user-3' },
+  { id: '1', subject: 'user-1', actions: ['add', 'view', 'delete'] },
+  { id: '2', subject: 'user-2', actions: ['view'] },
+  { id: '3', subject: 'user-3', actions: [] },
 ]);
 
 export const createPermissionsApiClient = (): PermissionsApiClient => {

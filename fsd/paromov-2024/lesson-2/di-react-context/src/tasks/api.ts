@@ -8,7 +8,7 @@ export const TasksContext = createStrictContext<TasksApiClient>();
 
 export const useTasks = () => {
   const { addTask, authorizeActionOrThrow, deleteTask, getTasks, getTaskById } =
-    useStrictContext(TasksContext, 'Tasks');
+    useStrictContext(TasksContext);
 
   async function create(title: string) {
     await authorizeActionOrThrow('add');
