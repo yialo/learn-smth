@@ -1,4 +1,5 @@
 #!/bin/bash
+
 num1=6
 if [ $num1 -gt 5 ]
 then

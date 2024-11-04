@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo "Homedir of current user: $HOME"
 echo "This costs \$1"
 
