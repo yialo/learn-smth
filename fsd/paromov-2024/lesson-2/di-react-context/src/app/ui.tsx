@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { PermissionsProvider } from '../permissions';
 import { SessionProvider, useUserId } from '../session';
 import { TaskList, TasksProvider } from '../tasks';
@@ -13,9 +14,11 @@ const TasksPermissionsProvider: React.FC<React.PropsWithChildren> = ({
   );
 };
 
-const permissionsApiClient = createPermissionsApiClient();
-
 export const App: React.FC = () => {
+  const [permissionsApiClient] = React.useState(() =>
+    createPermissionsApiClient(),
+  );
+
   return (
     <PermissionsProvider apiClient={permissionsApiClient}>
       <SessionProvider>
