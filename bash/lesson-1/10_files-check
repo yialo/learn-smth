@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [ -d ./empty-dir ]
+then echo "File is directory"
+else echo "File is not directory"
+fi
+
+
+if [ -s ./empty-dir ]
+then echo "1"
+else echo "2"
+fi
+
+if [ -s ./empty-file ]
+then echo "File is not empty"
+else echo "File is empty"
+fi
+
+mydir=$HOME
+if [ -d $mydir ]
+then
+echo "File is directory"
+cd $mydir
+ls
+else echo "File is not directory"
+fi
