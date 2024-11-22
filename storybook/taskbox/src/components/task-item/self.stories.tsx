@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
+import { Task } from './config';
 import { TaskItem } from './self';
 
 const actionsData = {
@@ -20,31 +21,31 @@ export default {
 
 type Story = StoryObj<typeof TaskItem>;
 
+const createTaskMock = (): Task => ({
+  id: '1',
+  title: 'Test Task',
+  state: 'INBOX',
+});
+
 export const Default: Story = {
   args: {
-    task: {
-      id: '1',
-      title: 'Test Task 1',
-      state: 'INBOX',
-    },
+    task: createTaskMock(),
   },
 };
 
 export const Pinned: Story = {
   args: {
     task: {
-      id: '2',
-      title: 'Test Task 2',
+      ...createTaskMock(),
       state: 'PINNED',
     },
   },
 };
 
-export const Archived = {
+export const Archived: Story = {
   args: {
     task: {
-      id: '3',
-      title: 'Test Task 3',
+      ...createTaskMock(),
       state: 'ARCHIVED',
     },
   },
