@@ -1,5 +1,0 @@
-export const TASK_STATE = {
-  INBOX: 'TASK_INBOX',
-  PINNED: 'TASK_PINNED',
-  ARCHIVED: 'TASK_ARCHIVED',
-};

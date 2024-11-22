@@ -1,7 +1,7 @@
+import type { Meta, StoryObj } from '@storybook/react';
 import { fn } from '@storybook/test';
 
-import { Task } from './self';
-import { TASK_STATE } from './config';
+import { TaskItem } from './self';
 
 const actionsData = {
   onArchiveTask: fn(),
@@ -9,31 +9,33 @@ const actionsData = {
 };
 
 export default {
-  component: Task,
-  title: 'Task',
+  component: TaskItem,
+  title: 'TaskItem',
   tags: ['autodocs'],
   excludeStories: /.*data$/,
   args: {
     ...actionsData,
   },
-};
+} satisfies Meta<typeof TaskItem>;
 
-export const Default = {
+type Story = StoryObj<typeof TaskItem>;
+
+export const Default: Story = {
   args: {
     task: {
       id: '1',
       title: 'Test Task 1',
-      state: TASK_STATE.INBOX,
+      state: 'INBOX',
     },
   },
 };
 
-export const Pinned = {
+export const Pinned: Story = {
   args: {
     task: {
       id: '2',
       title: 'Test Task 2',
-      state: TASK_STATE.PINNED,
+      state: 'PINNED',
     },
   },
 };
@@ -43,7 +45,7 @@ export const Archived = {
     task: {
       id: '3',
       title: 'Test Task 3',
-      state: TASK_STATE.ARCHIVED,
+      state: 'ARCHIVED',
     },
   },
 };
