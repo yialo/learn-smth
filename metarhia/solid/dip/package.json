@@ -2,10 +2,12 @@
   "name": "dip",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "no-di": "ts-node 1_no-di/main.ts",
+    "di": "ts-node 2_di/main.ts"
   },
   "devDependencies": {
     "@types/node": "22.10.1",
+    "ts-node": "10.9.2",
     "typescript": "5.7.2"
   }
 }

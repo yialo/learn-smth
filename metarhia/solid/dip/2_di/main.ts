@@ -2,4 +2,4 @@ import { logger } from './logger';
 import { serveStatic } from './server';
 import { PreparedFile, Storage } from './storage';
 
-console.log('No-DI');
+console.log('DI');
