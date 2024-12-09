@@ -2,8 +2,7 @@
   "name": "dip",
   "private": true,
   "scripts": {
-    "no-di": "ts-node 1_no-di/main.ts",
-    "di": "ts-node 2_di/main.ts"
+    "start": "ts-node main.ts"
   },
   "devDependencies": {
     "@types/node": "22.10.1",
