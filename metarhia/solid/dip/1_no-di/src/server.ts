@@ -2,8 +2,6 @@ import { createServer } from 'node:http';
 import { logger } from './logger';
 import { AppStorage } from './storage';
 
-export type ServeStaticFn = (folder: string, port: number) => void;
-
 const MIME_TYPES: { default: string; [key: string]: string } = {
   default: 'application/octet-stream',
   html: 'text/html; charset=UTF-8',
@@ -18,7 +16,7 @@ const MIME_TYPES: { default: string; [key: string]: string } = {
   txt: 'text/plain',
 };
 
-export const serveStatic: ServeStaticFn = (folder, port) => {
+export const serveStatic = (folder: string, port: number): void => {
   const storage = new AppStorage(folder);
 
   const server = createServer(async (req, res) => {

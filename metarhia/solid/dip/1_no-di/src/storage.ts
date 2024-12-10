@@ -1,13 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-interface IPreparedFile {
-  found: boolean;
-  ext: string;
-  stream: NodeJS.ReadableStream;
-}
-
-class PreparedFileImpl implements IPreparedFile {
+class PreparedFile {
   constructor(
     public found: boolean,
     public ext: string,
@@ -15,18 +9,14 @@ class PreparedFileImpl implements IPreparedFile {
   ) {}
 }
 
-interface IAppStorage {
-  prepare(filename: string): Promise<IPreparedFile>;
-}
-
-export class AppStorage implements IAppStorage {
+export class AppStorage {
   #folder = '';
 
   constructor(folder: string) {
     this.#folder = path.join(process.cwd(), folder);
   }
 
-  async prepare(filename: string): Promise<IPreparedFile> {
+  async prepare(filename: string): Promise<PreparedFile> {
     const paths = [this.#folder, filename];
 
     if (filename.endsWith('/')) {
@@ -44,6 +34,6 @@ export class AppStorage implements IAppStorage {
     const ext = path.extname(streamPath).substring(1).toLowerCase();
     const stream = fs.createReadStream(streamPath);
 
-    return new PreparedFileImpl(found, ext, stream);
+    return new PreparedFile(found, ext, stream);
   }
 }

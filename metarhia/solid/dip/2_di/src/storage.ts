@@ -1,13 +1,40 @@
-export declare class PreparedFile {
-  found: boolean;
-  ext: string;
-  stream: NodeJS.ReadableStream;
+import fs from 'node:fs';
+import path from 'node:path';
+import { AppStorage, PreparedFile } from './storage.types';
 
-  constructor(found: boolean, ext: string, stream: NodeJS.ReadableStream);
+class PreparedFileImpl implements PreparedFile {
+  constructor(
+    public found: boolean,
+    public ext: string,
+    public stream: NodeJS.ReadableStream,
+  ) {}
 }
 
-export declare class Storage {
-  constructor(folder: string);
+export class AppStorageImpl implements AppStorage {
+  #folder = '';
 
-  prepare(filename: string): Promise<PreparedFile>;
+  constructor(folder: string) {
+    this.#folder = path.join(process.cwd(), folder);
+  }
+
+  async prepare(filename: string): Promise<PreparedFile> {
+    const paths = [this.#folder, filename];
+
+    if (filename.endsWith('/')) {
+      paths.push('index.html');
+    }
+
+    const filePath = path.join(...paths);
+    const pathTraversal = !filePath.startsWith(this.#folder);
+    const exists = await fs.promises.access(filePath).then(
+      () => true,
+      () => false,
+    );
+    const found = !pathTraversal && exists;
+    const streamPath = found ? filePath : this.#folder + '/404.html';
+    const ext = path.extname(streamPath).substring(1).toLowerCase();
+    const stream = fs.createReadStream(streamPath);
+
+    return new PreparedFileImpl(found, ext, stream);
+  }
 }
