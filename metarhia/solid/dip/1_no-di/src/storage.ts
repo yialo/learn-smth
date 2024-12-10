@@ -23,7 +23,7 @@ export class AppStorage implements IAppStorage {
   #folder = '';
 
   constructor(folder: string) {
-    this.#folder = folder;
+    this.#folder = path.join(process.cwd(), folder);
   }
 
   async prepare(filename: string): Promise<IPreparedFile> {
