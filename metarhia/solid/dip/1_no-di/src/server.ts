@@ -28,8 +28,18 @@ export const serveStatic: ServeStaticFn = (folder, port) => {
 
     res.writeHead(statusCode, { 'Content-Type': mimeType });
     file.stream.pipe(res);
-    logger.log(`${req.method} ${req.url} ${statusCode}`);
+    logger.log(
+      `[${getFormattedDateNow()}] ${req.method} ${req.url} ${statusCode}`,
+    );
   });
 
   server.listen(port);
+};
+
+const getFormattedDateNow = () => {
+  const now = new Date();
+
+  return `${now.getFullYear()}-${
+    now.getMonth() + 1
+  }-${now.getDate()}_${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
 };
