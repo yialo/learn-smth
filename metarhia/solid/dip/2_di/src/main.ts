@@ -1,10 +1,14 @@
-import { createLogger } from './logger';
+import {
+  createPassThroughLogger,
+  createFileLogger,
+  createConsoleLogger,
+} from './logger';
 import { serveStatic } from './server';
 import { AppStorageImpl } from './storage';
 
 const PORT = 8000;
 
-const logger = createLogger('access.log');
+const logger = createPassThroughLogger('access.log');
 const storage = new AppStorageImpl('./static');
 
 serveStatic(storage, logger, PORT);

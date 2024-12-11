@@ -3,9 +3,9 @@ import path from 'node:path';
 import { Console } from 'node:console';
 import { PassThrough } from 'node:stream';
 
-import { LoggerCreator } from './logger.types';
+import { LoggerCreator } from '../logger.types';
 
-export const createLogger: LoggerCreator = (filename) => {
+export const createPassThroughLogger: LoggerCreator = (filename) => {
   const filePath = path.join(process.cwd(), 'logs', filename);
   const fileStream = fs.createWriteStream(filePath);
 

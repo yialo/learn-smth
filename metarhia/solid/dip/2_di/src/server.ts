@@ -1,4 +1,5 @@
 import { createServer } from 'node:http';
+
 import { ServeStaticFn } from './server.types';
 
 const MIME_TYPES: { default: string; [key: string]: string } = {

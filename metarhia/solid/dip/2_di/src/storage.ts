@@ -1,14 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { AppStorage, PreparedFile } from './storage.types';
 
-class PreparedFileImpl implements PreparedFile {
-  constructor(
-    public found: boolean,
-    public ext: string,
-    public stream: NodeJS.ReadableStream,
-  ) {}
-}
+import { AppStorage, PreparedFile } from './storage.types';
 
 export class AppStorageImpl implements AppStorage {
   #folder = '';
@@ -35,6 +28,6 @@ export class AppStorageImpl implements AppStorage {
     const ext = path.extname(streamPath).substring(1).toLowerCase();
     const stream = fs.createReadStream(streamPath);
 
-    return new PreparedFileImpl(found, ext, stream);
+    return { found, ext, stream };
   }
 }
