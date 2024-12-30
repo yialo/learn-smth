@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { throwOverTime, fetchData } from '../lib';
+import { throwOverTime, fetchData } from './utils';
 
 const dataPromise = fetchData();
 const rejectedPromise = throwOverTime();
