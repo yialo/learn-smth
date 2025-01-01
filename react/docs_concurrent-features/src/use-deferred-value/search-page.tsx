@@ -1,8 +1,11 @@
 import * as React from 'react';
 
-import { HeavyThing } from '../heavy-thing';
+import { HeavyThing } from '../slow-things/heavy-thing';
+import { SlowList } from '../slow-things/slow-list';
 
 import './search-page.css';
+
+const showHeavyThing = true;
 
 export const SearchPage: React.FC = () => {
   const [query, setQuery] = React.useState('');
@@ -21,13 +24,17 @@ export const SearchPage: React.FC = () => {
       </label>
 
       <div className="row">
-        <span>deferredQuery</span>
-        <output>{query}</output>
+        <span>deferredQuery:</span>
+        <output>{deferredQuery}</output>
       </div>
 
       <hr />
 
-      <HeavyThing text={deferredQuery} />
+      {showHeavyThing ? (
+        <HeavyThing text={deferredQuery} />
+      ) : (
+        <SlowList text={deferredQuery} />
+      )}
     </div>
   );
 };

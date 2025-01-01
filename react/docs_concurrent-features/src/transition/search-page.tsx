@@ -1,8 +1,11 @@
 import * as React from 'react';
 
-import { HeavyThing } from '../heavy-thing';
+import { HeavyThing } from '../slow-things/heavy-thing';
 
 import './search-page.css';
+
+const applyTransition = true;
+const applyTransitionHook = true;
 
 export const SearchPage: React.FC = () => {
   const [query, setQuery] = React.useState('');
@@ -13,8 +16,13 @@ export const SearchPage: React.FC = () => {
   };
 
   const updateQuery = (newQuery: string) => {
-    React.startTransition(getQueryTransition(newQuery));
-    // startQueryTransition(getQueryTransition(newQuery));
+    if (!applyTransition) {
+      setQuery(newQuery);
+    } else if (applyTransitionHook) {
+      startQueryTransition(getQueryTransition(newQuery));
+    } else {
+      React.startTransition(getQueryTransition(newQuery));
+    }
   };
 
   return (
@@ -28,11 +36,6 @@ export const SearchPage: React.FC = () => {
           onChange={(e) => updateQuery(e.target.value)}
         />
       </label>
-
-      <div className="row">
-        <span>deferredQuery</span>
-        <output>{query}</output>
-      </div>
 
       <hr />
 
