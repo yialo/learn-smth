@@ -3,7 +3,7 @@ import * as React from 'react';
 import { throwOverTime, fetchData } from './utils';
 
 const dataPromise = fetchData();
-const rejectedPromise = throwOverTime();
+// const rejectedPromise = throwOverTime();
 
 export const ItemList: React.FC = () => {
   return (
