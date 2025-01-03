@@ -1,9 +1,13 @@
-// import { SearchPage } from './use';
-import { SearchPage } from './transition';
-// import { SearchPage } from './use-deferred-value';
+import { SearchPage as SearchPageWithUse } from './use';
+import { SearchPage as SearchPageWithTransition } from './transition';
+import { SearchPage as SearchPageWithDeferredValue } from './use-deferred-value';
 
 import './app.css';
 
 export function App() {
-  return <SearchPage />;
+  return {
+    use: <SearchPageWithUse />,
+    transition: <SearchPageWithTransition />,
+    deferredValue: <SearchPageWithDeferredValue />,
+  }['deferredValue'];
 }

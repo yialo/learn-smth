@@ -32,7 +32,7 @@ HeavyThing.displayName = 'memo(HeavyThing)';
 const HugeList: React.FC<{ text: string }> = ({ text }) => {
   return (
     <ul>
-      {Array.from({ length: 10000 }).map((_, i) => (
+      {Array.from({ length: 50000 }).map((_, i) => (
         <li key={i}>{text}</li>
       ))}
     </ul>
