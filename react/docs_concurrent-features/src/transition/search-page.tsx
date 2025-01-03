@@ -5,7 +5,7 @@ import { HeavyThing } from '../slow-things/heavy-thing';
 import './search-page.css';
 
 const applyTransition = true;
-const applyTransitionHook = true;
+const applyTransitionHook = false;
 
 export const SearchPage: React.FC = () => {
   const [query, setQuery] = React.useState('');
@@ -35,6 +35,7 @@ export const SearchPage: React.FC = () => {
           value={query}
           onChange={(e) => updateQuery(e.target.value)}
         />
+        {isQueryPending && <span>Updating...</span>}
       </label>
 
       <hr />

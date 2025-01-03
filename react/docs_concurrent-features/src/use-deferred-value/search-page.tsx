@@ -13,6 +13,7 @@ export const SearchPage: React.FC = () => {
   const deferredQuery = React.useDeferredValue(query);
 
   const appliedQuery = applyDeferring ? deferredQuery : query;
+  const isQueryPending = deferredQuery !== query;
 
   return (
     <div>
@@ -24,6 +25,7 @@ export const SearchPage: React.FC = () => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
+        {isQueryPending && <span>Updating...</span>}
       </label>
 
       <div className="row">
