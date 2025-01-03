@@ -1,11 +1,13 @@
 import * as React from 'react';
 
 import { HeavyThing } from '../slow-things/heavy-thing';
+import { SlowList } from '../slow-things/slow-list';
 
 import './search-page.css';
 
 const applyTransition = true;
-const applyTransitionHook = false;
+const applyTransitionHook = true;
+const showHeavyThing = true;
 
 export const SearchPage: React.FC = () => {
   const [query, setQuery] = React.useState('');
@@ -40,7 +42,7 @@ export const SearchPage: React.FC = () => {
 
       <hr />
 
-      <HeavyThing text={query} />
+      {showHeavyThing ? <HeavyThing text={query} /> : <SlowList text={query} />}
     </div>
   );
 };

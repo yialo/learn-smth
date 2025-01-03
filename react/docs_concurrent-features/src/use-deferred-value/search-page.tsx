@@ -5,8 +5,8 @@ import { SlowList } from '../slow-things/slow-list';
 
 import './search-page.css';
 
-const showHeavyThing = true;
 const applyDeferring = true;
+const showHeavyThing = true;
 
 export const SearchPage: React.FC = () => {
   const [query, setQuery] = React.useState('');
