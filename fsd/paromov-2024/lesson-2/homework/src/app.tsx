@@ -1,5 +1,5 @@
 import { createStorage } from './lib/storage';
-import { Task, TasksList, TasksStorage, useTasks } from './tasks';
+import { Task, TaskList, TasksStorage, useTasksModel } from './tasks';
 import { UserSelect } from './user';
 
 const TASKS_STORAGE_KEY = 'tasks';
@@ -12,10 +12,10 @@ const adaptedTasksStorage: TasksStorage = {
 };
 
 export function App() {
-  const tasksModel = useTasks({ storage: adaptedTasksStorage });
+  const tasksModel = useTasksModel({ storage: adaptedTasksStorage });
 
   return (
-    <TasksList
+    <TaskList
       model={tasksModel}
       renderOwner={(ownerId, onChangeOwner) => (
         <UserSelect userId={ownerId} onChangeUserId={onChangeOwner} />

@@ -13,7 +13,7 @@ export type TasksStorage = {
   saveTasks: (tasks: Task[]) => void;
 };
 
-export function useTasks({ storage }: { storage: TasksStorage }) {
+export function useTasksModel({ storage }: { storage: TasksStorage }) {
   const [tasks, setTasks] = React.useState<Task[]>(() => storage.getTasks([]));
 
   const addTask = (value: string) => {
@@ -54,4 +54,4 @@ export function useTasks({ storage }: { storage: TasksStorage }) {
   };
 }
 
-export type TasksModel = ReturnType<typeof useTasks>;
+export type TasksModel = ReturnType<typeof useTasksModel>;

@@ -4,7 +4,7 @@ import { DeleteTaskButton } from './delete-task-button';
 import { TaskDoneCheck } from './task-done-check';
 import { TaskItem } from './task-item';
 
-export function TasksList({
+export function TaskList({
   model,
   renderOwner,
 }: {
