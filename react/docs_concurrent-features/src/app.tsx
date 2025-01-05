@@ -9,5 +9,5 @@ export function App() {
     use: <SearchPageWithUse />,
     transition: <SearchPageWithTransition />,
     deferredValue: <SearchPageWithDeferredValue />,
-  }['deferredValue'];
+  }['transition'];
 }
