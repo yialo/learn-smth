@@ -10,12 +10,14 @@ export const ItemList: React.FC = () => {
   );
 };
 
+// const data = { results: [{ uid: '1', name: 'Luke Skywalker' }] };
+
 const dataPromise = fetchData();
 // const rejectedPromise = throwOverTime();
 
 const Internal: React.FC = () => {
   /* const dataPromise = React.useMemo(() => {
-    console.log('useMemo');
+    console.log('useMemo called');
     return fetchData();
   }, []);
 

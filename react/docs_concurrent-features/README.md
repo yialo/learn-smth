@@ -1,3 +1,3 @@
-# React docs: Concurrent-features
+# React docs: Concurrent features
 
-Notice that transitions don't work well with text input changes.
+Notice that transitions don't work with text input changes.
