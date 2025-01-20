@@ -5,9 +5,7 @@ import { Task, TasksApiClient } from './config';
 export const TasksProvider: React.FC<
   React.PropsWithChildren<{ apiClient: TasksApiClient }>
 > = ({ children, apiClient }) => {
-  return (
-    <TasksContext.Provider value={apiClient}>{children}</TasksContext.Provider>
-  );
+  return <TasksContext value={apiClient}>{children}</TasksContext>;
 };
 
 export const TaskList: React.FC = () => {

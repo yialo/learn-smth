@@ -5,11 +5,11 @@ export const createStrictContext = <V>() => {
 };
 
 export const useStrictContext = <V>(Context: React.Context<V>) => {
-  const value = React.useContext(Context);
+  const value = React.use(Context);
 
   if (value === undefined) {
     throw new Error(
-      `Hook must be used within a ${Context.displayName || 'Context'}.Provider`,
+      `Hook must be used within a ${Context.displayName || 'Context'} component`,
     );
   }
 
