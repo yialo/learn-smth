@@ -1,0 +1,140 @@
+@layer defaults, components, utilities;
+
+@layer defaults {
+  a:is(:link, :visited) {
+    /* low-priority layers are easy to override by default */
+    color: mediumvioletred;
+
+    /* but take priority with importance */
+    text-decoration: underline !important;
+  }
+}
+
+@layer utilities {
+  /* high-priority layers win by default */
+  .maroon {
+    color: maroon;
+  }
+}
+
+@layer components {
+  #call-to-action {
+    /* higher layers have lower priority with important styles */
+    text-decoration: none !important;
+    color: rebeccapurple;
+    font-size: 3em;
+    display: inline-block;
+    border: medium solid;
+    padding: 0.25em 0.5em;
+    border-radius: 0.25em;
+  }
+}
+
+/* page layout */
+html {
+  height: 100%;
+}
+
+body {
+  display: grid;
+  min-height: 100%;
+  place-content: center;
+  padding: 1em;
+}
+
+@layer outer.second, outer.first;
+/* Actual layer order:
+@layer outer.second, outer.first, outer.third;
+*/
+
+@layer outer {
+  button {
+    font-size: 1.5rem !important;
+    /* this border-color wins */
+    border-color: black;
+  }
+
+  @layer first {
+    button {
+      color: red;
+      /* this background-color wins */
+      background-color: wheat;
+    }
+  }
+
+  @layer second {
+    button {
+      color: blue;
+      border-color: red;
+      background-color: white;
+    }
+  }
+
+  @layer third {
+    button {
+      /* this color wins */
+      color: green;
+    }
+  }
+}
+
+@keyframes about-revert-border-color {
+  from {
+    border-color: plum;
+  }
+  to {
+    border-color: plum;
+  }
+}
+
+@layer about-revert {
+  @layer defaults {
+    .about-revert {
+      /* This border-radius wins */
+      border-radius: 0px !important;
+
+      color: red;
+    }
+  }
+
+  @layer components {
+    .about-revert {
+      /* This color wins */
+      color: blue;
+      /* This background-color wins */
+      background-color: yellow;
+    }
+  }
+
+  @layer utilities {
+    .about-revert {
+      /* This border-color wins */
+      border-color: red !important;
+
+      color: green;
+      color: revert-layer;
+
+      background-color: salmon !important;
+      background-color: revert-layer !important;
+    }
+  }
+
+  .about-revert {
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 2rem;
+    background-color: orange !important;
+
+    animation: 3s linear infinite about-revert-border-color;
+
+    transition-duration: 0.1s;
+    transition-timing-function: linear;
+    transition-property: border-radius;
+
+    &:hover {
+      border-radius: 20px;
+    }
+  }
+}
