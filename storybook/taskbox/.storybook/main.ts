@@ -1,5 +1,6 @@
-/** @type { import('@storybook/react-vite').StorybookConfig } */
-const config = {
+import { StorybookConfig } from '@storybook/react-vite';
+
+export default {
   stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   staticDirs: ['../public'],
   addons: [
@@ -14,5 +15,4 @@ const config = {
   core: {
     disableTelemetry: true,
   },
-};
-export default config;
+} satisfies StorybookConfig;
