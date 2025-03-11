@@ -1,8 +1,9 @@
 import { Preview } from '@storybook/react';
 
+import '../src/index.css';
+
 export default {
   parameters: {
-    layout: 'centered',
     controls: {
       matchers: {
         color: /(background|color)$/i,

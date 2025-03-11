@@ -2,10 +2,6 @@
   "name": "learn-storybook-taskbox",
   "type": "module",
   "private": true,
-  "dependencies": {
-    "react": "19.0.0",
-    "react-dom": "19.0.0"
-  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -13,6 +9,11 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "init-msw": "msw init public/"
+  },
+  "dependencies": {
+    "clsx": "2.1.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "8.6.4",

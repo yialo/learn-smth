@@ -322,11 +322,11 @@ textarea {
   color: #555;
 }
 
-.list-item.TASK_PINNED .icon-star {
+.list-item.task_pinned .icon-star {
   color: #2cc5d2;
 }
 
-.list-item.TASK_ARCHIVED input[type='text'] {
+.list-item.task_archived input[type='text'] {
   color: #a0aec0;
   text-decoration: line-through;
 }
