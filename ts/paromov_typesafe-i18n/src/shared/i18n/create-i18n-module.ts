@@ -19,6 +19,7 @@ export const flattenTranslations = (tree: Record<string, any>) => {
 
   const flattenOneLevel = (level: object, parentPath: string = '') => {
     for (const [key, nextLevel] of Object.entries(level)) {
+      // @NOTE Need only for constructing keys with final translations, but we need to pass this to each level
       const nextPath = parentPath ? `${parentPath}.${key}` : key;
 
       if (typeof nextLevel === 'string') {
