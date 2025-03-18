@@ -14,30 +14,22 @@ export const createI18nModule = (tree: any) => {
   };
 };
 
-export const flattenTranslations = (tree: any) => {
-  const output: Record<string, any> = {};
+export const flattenTranslations = (tree: Record<string, any>) => {
+  const flattened: Record<string, any> = {};
 
-  /* const flatten = (obj: any, path = '') => {
-    for (const [key, value] of Object.entries(obj)) {
-      if (typeof value === 'object' && !!value) {
-        output[key] = flatten(value);
+  const flattenOneLevel = (level: object, parentPath: string = '') => {
+    for (const [key, nextLevel] of Object.entries(level)) {
+      const nextPath = parentPath ? `${parentPath}.${key}` : key;
+
+      if (typeof nextLevel === 'string') {
+        flattened[nextPath] = nextLevel;
       } else {
-        const jointKey = `${key}.${value}`;
-        output[jointKey] = tree[key];
+        flattenOneLevel(nextLevel, nextPath);
       }
     }
   };
 
-  flatten(tree); */
+  flattenOneLevel(tree);
 
-  // Case: One-level tree
-
-  for (const [path, subtree] of Object.entries(tree)) {
-    for (const [lang, translation] of Object.entries(subtree as object)) {
-      const pathWithLang = `${path}.${lang}`;
-      output[pathWithLang] = translation;
-    }
-  }
-
-  return output;
+  return flattened;
 };
