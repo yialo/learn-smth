@@ -5,6 +5,11 @@ const { useI18n } = createI18nModule({
     en: 'My title',
     ru: 'Мой заголовок',
   },
+  nested: {
+    block: {
+      en: 'Block',
+    },
+  },
 });
 
 const Consumer: React.FC = () => {
@@ -14,7 +19,7 @@ const Consumer: React.FC = () => {
     <div className="consumer">
       <div>
         <div>Simple key: {t('title')}</div>
-        <div>Nested key: {t('block.text')}</div>
+        <div>Nested key: {t('nested.block')}</div>
       </div>
     </div>
   );

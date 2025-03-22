@@ -1,6 +1,8 @@
 import * as React from 'react';
 
-export const LangContext = React.createContext<string | undefined>(undefined);
+import { Lang } from '../types';
+
+export const LangContext = React.createContext<Lang | undefined>(undefined);
 LangContext.displayName = 'LangContext';
 
 export const useLang = () => {
