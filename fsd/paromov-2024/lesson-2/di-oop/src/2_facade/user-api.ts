@@ -1,4 +1,4 @@
-// Facade module: adapts UserHttpService to UserStore
+// Facade module: statically adapts UserHttpService to UserStore
 
 import { UserHttpService } from './user-http-service';
 
