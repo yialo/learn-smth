@@ -38,6 +38,10 @@ function second() {
 }
 
 /* class ExampleWithMethod {
+  test = 'test';
+  // Can't use method decorators on functional properties
+  myFunctionalProperty = (value: string) => this.test + '_' + value;
+
   @first()
   @second()
   myMethod() {}
@@ -121,8 +125,10 @@ function decorateInstanceMethodParameter(
   );
 }
 
-class ExampleWithParameter {
+/* class ExampleWithParameter {
   #internalValue: string;
+  // Can't apply parameter decorators to functional properties
+  showWithSuffix = (suffix: string): string => this.#internalValue + suffix;
 
   constructor(@decorateConstructorParameter value: string) {
     this.#internalValue = value;
@@ -131,4 +137,72 @@ class ExampleWithParameter {
   showWithPrefix(@decorateInstanceMethodParameter prefix: string): string {
     return prefix + this.#internalValue;
   }
+} */
+
+const requiredParamsMetadataKey = Symbol('requiredParams');
+
+const required = (
+  target: object,
+  propertyKey: string,
+  parameterIndex: number,
+) => {
+  const registeredRequiredParamIndices =
+    Reflect.getOwnMetadata(requiredParamsMetadataKey, target, propertyKey) ??
+    [];
+  registeredRequiredParamIndices.push(parameterIndex);
+
+  Reflect.defineMetadata(
+    requiredParamsMetadataKey,
+    registeredRequiredParamIndices,
+    target,
+    propertyKey,
+  );
+};
+
+const validate = (
+  target: object,
+  propertyKey: string,
+  descriptor: PropertyDescriptor,
+) => {
+  const unboundMethod = descriptor.value;
+
+  descriptor.value = function (...args: any[]) {
+    const requiredParamIndices = Reflect.getOwnMetadata(
+      requiredParamsMetadataKey,
+      target,
+      propertyKey,
+    );
+
+    for (const requiredParamIndex of requiredParamIndices) {
+      if (
+        requiredParamIndex >= args.length ||
+        args[requiredParamIndex] === undefined
+      ) {
+        throw new Error('Missing required parameter.');
+      }
+    }
+
+    return unboundMethod.apply(this, args);
+  };
+};
+
+class BugReport {
+  type = 'report';
+  title: string;
+
+  constructor() {
+    this.title = 'Bug Report';
+  }
+
+  @validate
+  report(@required verbose: boolean) {
+    if (verbose) {
+      return `type: ${this.type}\ntitle: ${this.title}`;
+    } else {
+      return this.title;
+    }
+  }
 }
+
+const bugReport = new BugReport();
+console.log(bugReport.report(true));
