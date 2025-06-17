@@ -186,7 +186,7 @@ const validate = (
   };
 };
 
-class BugReport {
+/* class BugReport {
   type = 'report';
   title: string;
 
@@ -205,4 +205,62 @@ class BugReport {
 }
 
 const bugReport = new BugReport();
-console.log(bugReport.report(true));
+console.log(bugReport.report(true)); */
+
+const instanceMetadataKey = Symbol('design:type');
+
+const validateInstance = <T>(
+  target: object,
+  propertyKey: string,
+  descriptor: TypedPropertyDescriptor<T>,
+) => {
+  const setter = descriptor.set!;
+
+  descriptor.set = function (value: T) {
+    const type = Reflect.getMetadata(instanceMetadataKey, target, propertyKey);
+
+    if (!(value instanceof type)) {
+      throw new TypeError(
+        `Invalid type, got ${typeof value} not ${type.name}.`,
+      );
+    }
+
+    return setter.call(this, value);
+  };
+};
+
+class Point {
+  constructor(public x: number, public y: number) {}
+}
+
+class Line {
+  private _start: Point | undefined;
+  private _end: Point | undefined;
+
+  @Reflect.metadata(instanceMetadataKey, Point)
+  @validateInstance
+  set start(value: Point) {
+    this._start = value;
+  }
+
+  get start() {
+    // @ts-ignore
+    return this._start;
+  }
+
+  @Reflect.metadata(instanceMetadataKey, Point)
+  @validateInstance
+  set end(value: Point) {
+    this._end = value;
+  }
+
+  get end() {
+    // @ts-ignore
+    return this._end;
+  }
+}
+
+const line = new Line();
+line.start = new Point(1, -1);
+// @ts-ignore, but caught in runtime
+line.end = {};
