@@ -4,6 +4,7 @@
     "target": "es2022",
     "outDir": "dist",
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "esModuleInterop": true,

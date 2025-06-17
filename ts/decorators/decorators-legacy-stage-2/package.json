@@ -11,5 +11,8 @@
     "concurrently": "9.1.2",
     "nodemon": "3.1.10",
     "typescript": "5.8.3"
+  },
+  "dependencies": {
+    "reflect-metadata": "0.2.2"
   }
 }
