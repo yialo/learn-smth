@@ -1,0 +1,15 @@
+{
+  "name": "decorators-legacy-stage-2",
+  "private": true,
+  "scripts": {
+    "watch": "tsc --watch",
+    "serve": "nodemon dist/index.js",
+    "start": "concurrently \"npm run watch\" \"npm run serve\""
+  },
+  "type": "module",
+  "devDependencies": {
+    "concurrently": "9.1.2",
+    "nodemon": "3.1.10",
+    "typescript": "5.8.3"
+  }
+}
