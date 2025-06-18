@@ -263,4 +263,4 @@ class Line {
 const line = new Line();
 line.start = new Point(1, -1);
 // @ts-ignore, but caught in runtime
-line.end = {};
+// line.end = {};
