@@ -1,5 +1,5 @@
 {
-  "name": "decorators-legacy-stage-1",
+  "name": "legacy-ts-decorators",
   "private": true,
   "scripts": {
     "start": "tsx watch src/index.ts"
