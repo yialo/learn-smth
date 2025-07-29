@@ -11,6 +11,9 @@ class MyClass {
   @createDecorator('property')
   p = 1;
 
+  @createDecorator('static method')
+  static sm() {}
+
   @createDecorator('method')
   m() {}
 
