@@ -8,19 +8,19 @@ console.log('=== START ===');
 
 @createDecorator('class')
 class MyClass {
-  set a(value) {}
-
-  @createDecorator('property')
-  p = 1;
+  @createDecorator('instance property')
+  instanceProperty = 1;
 
   @createDecorator('static method')
-  static sm() {}
+  static staticMethod() {}
 
-  @createDecorator('method')
-  m() {}
+  @createDecorator('instance method')
+  instanceMethod() {}
 
-  @createDecorator('getter')
-  get a() {
+  set accessedInstanceValue(value) {}
+
+  @createDecorator('instance getter')
+  get accessedInstanceValue() {
     return 'a value';
   }
 }
