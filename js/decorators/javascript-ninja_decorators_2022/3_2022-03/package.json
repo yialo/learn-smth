@@ -1,0 +1,13 @@
+{
+  "name": "javascript-ninja_decorators_2022_3_2022-03",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "start": "babel-node --watch -- src/index.js"
+  },
+  "devDependencies": {
+    "@babel/core": "7.28.0",
+    "@babel/node": "7.28.0",
+    "@babel/plugin-proposal-decorators": "7.28.0"
+  }
+}
