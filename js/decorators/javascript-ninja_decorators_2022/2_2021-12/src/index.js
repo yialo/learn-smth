@@ -1,6 +1,6 @@
 function createDecorator(place) {
   return function decorator(...args) {
-    console.log(`[decorator call] (${place}):`, args);
+    console.log(`[decorator call] (${place}):`, args, '\n');
   };
 }
 
