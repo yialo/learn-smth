@@ -1,5 +1,5 @@
 {
-  "name": "javascript-ninja_decorators_2022_stage-1",
+  "name": "javascript-ninja_decorators_2022_1_legacy",
   "private": true,
   "scripts": {
     "start": "tsx watch src/index.ts"
