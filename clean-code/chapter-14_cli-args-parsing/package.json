@@ -1,0 +1,11 @@
+{
+  "name": "chapter-14_cli-args-parsing",
+  "private": true,
+  "scripts": {
+    "start": "tsx src/index.ts"
+  },
+  "devDependencies": {
+    "tsx": "4.20.5",
+    "typescript": "5.9.2"
+  }
+}
