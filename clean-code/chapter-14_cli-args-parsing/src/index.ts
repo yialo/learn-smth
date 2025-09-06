@@ -1,33 +1,13 @@
-class Args {
-  constructor(...anyParams: any[]) {}
+import { Args, ArgsException } from './args/args.ts';
 
-  getBoolean(input: string): boolean {
-    return Boolean(input);
-  }
-
-  getInt(input: string): number {
-    return Number(input);
-  }
-
-  getString(input: string): string {
-    return String(input);
-  }
-}
-
-class ArgsException extends Error {
-  errorMessage(): string {
-    return this.toString();
-  }
-}
-
-function main(...args: string[]) {
-  console.log('--main---');
+function main(inputArgs: string[]) {
+  console.log('---main---');
 
   try {
-    const arg: Args = new Args('l,p#,d*', args);
-    const logging: boolean = arg.getBoolean('l');
-    const port: number = arg.getInt('p');
-    const directory: string = arg.getString('d');
+    const args: Args = new Args('l,p#,d*', inputArgs);
+    const logging: boolean = args.getBoolean('l');
+    const port: number = args.getInteger('p');
+    const directory: string = args.getString('d');
 
     executeApplication(logging, port, directory);
   } catch (error: unknown) {
@@ -39,6 +19,8 @@ function main(...args: string[]) {
   }
 }
 
-function executeApplication(...anyParams: any[]) {}
+function executeApplication(...anyParams: any[]) {
+  console.log('---executeApplication---', ...anyParams);
+}
 
-main('my cool args');
+main(['true', '3080', '/usr/logs']);
