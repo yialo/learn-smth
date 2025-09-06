@@ -1,12 +1,13 @@
+import { ArgListIterator } from './arg-list-iterator.ts';
+import { isLetter } from './utils.ts';
+
 export class Args {
   #marshalers = new Map<string, ArgumentMarshaler>();
   #argsFound = new Set<string>();
-  // @TODO: abstract access to current argument
-  readonly #argList: string[];
-  #currentArgumentIndex = 0;
+  #argListIterator: ArgListIterator;
 
   constructor(schema: string, inputArgs: string[]) {
-    this.#argList = inputArgs;
+    this.#argListIterator = new ArgListIterator(inputArgs);
 
     this.#parseSchema(schema);
     this.#parseArgumentStrings();
@@ -46,20 +47,19 @@ export class Args {
   }
 
   #validateElementSchemaId(elementId: string): void {
-    if (!/[a-z]/.test(elementId)) {
+    if (!isLetter(elementId)) {
       throw new ArgsException('INVALID_ARGUMENT_NAME', elementId, null);
     }
   }
 
   // @TODO Grasp this thoroughly
   #parseArgumentStrings(): void {
-    for (; this.#currentArgumentIndex < this.#argList.length - 1; ) {
-      ++this.#currentArgumentIndex;
-      const argString = this.#argList[this.#currentArgumentIndex];
+    while (this.#argListIterator.hasNext()) {
+      const argString = this.#argListIterator.next();
       if (argString?.startsWith('-')) {
         this.#parseArgumentCharacters(argString.substring(1));
       } else {
-        --this.#currentArgumentIndex;
+        this.#argListIterator.previous();
         break;
       }
     }
@@ -81,8 +81,7 @@ export class Args {
     this.#argsFound.add(argChar);
 
     try {
-      const currentArg = this.#argList[this.#currentArgumentIndex];
-      if (currentArg) marshaler.set(currentArg);
+      marshaler.set(this.#argListIterator);
     } catch (error) {
       if (error instanceof ArgsException) {
         error.setArgumentId(argChar);
@@ -95,7 +94,7 @@ export class Args {
   }
 
   nextArgumentIndex(): number {
-    return this.#currentArgumentIndex + 1;
+    return this.#argListIterator.nextIndex();
   }
 
   getBoolean(arg: string): boolean {
@@ -120,7 +119,7 @@ export class Args {
 }
 
 interface ArgumentMarshaler {
-  set(currentArgument: string): void;
+  set(argListWalker: ArgListIterator): void;
 }
 
 class BooleanArgumentMarshaler implements ArgumentMarshaler {
@@ -145,7 +144,7 @@ class StringArgumentMarshaler implements ArgumentMarshaler {
     return '';
   }
 
-  set(currentArgument: string) {}
+  set(argListIterator: ArgListIterator) {}
 }
 
 class IntegerArgumentMarshaler implements ArgumentMarshaler {
@@ -153,7 +152,7 @@ class IntegerArgumentMarshaler implements ArgumentMarshaler {
     return 0;
   }
 
-  set(currentArgument: string) {}
+  set(argListIterator: ArgListIterator) {}
 }
 
 class FloatArgumentMarshaler implements ArgumentMarshaler {
@@ -161,7 +160,7 @@ class FloatArgumentMarshaler implements ArgumentMarshaler {
     return 1.5;
   }
 
-  set(currentArgument: string) {}
+  set(argListIterator: ArgListIterator) {}
 }
 
 class StringArrayArgumentMarshaler implements ArgumentMarshaler {
@@ -169,7 +168,7 @@ class StringArrayArgumentMarshaler implements ArgumentMarshaler {
     return [];
   }
 
-  set(currentArgument: string) {}
+  set(argListIterator: ArgListIterator) {}
 }
 
 export class ArgsException extends Error {
