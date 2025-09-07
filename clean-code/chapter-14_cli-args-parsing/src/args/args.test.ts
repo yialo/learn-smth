@@ -7,9 +7,9 @@ describe('Args', () => {
   };
 
   // @FIXME
-  test.skip('happy path', () => {
+  test('happy path', () => {
     const schema = 'l,p#,d*';
-    const inputArgs = ['-l', '-p3080', '-d/usr/logs'];
+    const inputArgs = ['-l', '-p', '3000', '-d', '/usr/logs'];
 
     const args = new Args(schema, inputArgs);
     const shouldLog = args.getBoolean('l');
@@ -19,10 +19,11 @@ describe('Args', () => {
     executeApplication(shouldLog, port, directory);
   });
 
+  // @FIXME
   test.skip('sad path', () => {
     try {
       const schema = 'l,p#,d*';
-      const inputArgs = ['-v', '-pBAD', '-d823'];
+      const inputArgs = ['-l', 'bad', '-p', '-d', '823'];
 
       const args = new Args(schema, inputArgs);
       const shouldLog = args.getBoolean('l');
