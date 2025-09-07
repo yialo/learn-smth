@@ -57,7 +57,7 @@ export class Args {
 
   #validateSchemaElementId(elementId: string): void {
     if (!isLowercaseLatinLetter(elementId)) {
-      throw new ArgsException('INVALID_ARGUMENT_NAME', elementId, null);
+      throw new ArgsException('INVALID_ARGUMENT_NAME', elementId);
     }
   }
 
@@ -83,7 +83,7 @@ export class Args {
   #parseArgumentCharacter(argChar: string) {
     const marshaler = this.#marshalers.get(argChar);
     if (!marshaler) {
-      throw new ArgsException('UNEXPECTED_ARGUMENT', argChar, null);
+      throw new ArgsException('UNEXPECTED_ARGUMENT', argChar);
     }
 
     this.#argsFound.add(argChar);
@@ -92,7 +92,7 @@ export class Args {
       marshaler.set(this.#argListIterator);
     } catch (error) {
       if (error instanceof ArgsException) {
-        error.setArgumentId(argChar);
+        error.setErrorArgumentId(argChar);
       }
     }
   }
