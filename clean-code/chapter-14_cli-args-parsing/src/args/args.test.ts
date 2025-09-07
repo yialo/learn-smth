@@ -8,8 +8,18 @@ describe('Args', () => {
 
   // @FIXME
   test('happy path', () => {
-    const schema = 'l,p#,d*';
-    const inputArgs = ['-l', '-p', '3000', '-d', '/usr/logs'];
+    const schema = 'l,p#,c##,d*,n[*]';
+    const inputArgs = [
+      '-l',
+      '-p',
+      '3000',
+      '-d',
+      '/usr/logs',
+      '-c',
+      '6',
+      '-n',
+      '[Alice,Bob,Crack]',
+    ];
 
     const args = new Args(schema, inputArgs);
     const shouldLog = args.getBoolean('l');
