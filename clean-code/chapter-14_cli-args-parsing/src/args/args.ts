@@ -25,28 +25,29 @@ export class Args {
     const elementId: string = element.charAt(0);
     const elementTail: string = element.substring(1);
 
-    this.#validateElementSchemaId(elementId);
+    this.#validateSchemaElementId(elementId);
 
-    if (elementTail.length === 0) {
-      this.#marshalers.set(elementId, new BooleanArgumentMarshaler());
-    } else if (elementTail === '*') {
-      this.#marshalers.set(elementId, new StringArgumentMarshaler());
-    } else if (elementId === '#') {
-      this.#marshalers.set(elementId, new IntegerArgumentMarshaler());
-    } else if (elementId === '##') {
-      this.#marshalers.set(elementId, new FloatArgumentMarshaler());
-    } else if (elementId === '[*]') {
-      this.#marshalers.set(elementId, new StringArrayArgumentMarshaler());
-    } else {
-      throw new ArgsException(
-        'INVALID_ARGUMENT_FORMAT',
-        elementId,
-        elementTail,
-      );
+    switch (true) {
+      case elementTail.length === 0:
+        this.#marshalers.set(elementId, new BooleanArgumentMarshaler());
+      case elementTail === '*':
+        this.#marshalers.set(elementId, new StringArgumentMarshaler());
+      case elementTail === '#':
+        this.#marshalers.set(elementId, new IntegerArgumentMarshaler());
+      case elementTail === '##':
+        this.#marshalers.set(elementId, new FloatArgumentMarshaler());
+      case elementTail === '[*]':
+        this.#marshalers.set(elementId, new StringArrayArgumentMarshaler());
+      default:
+        throw new ArgsException(
+          'INVALID_ARGUMENT_FORMAT',
+          elementId,
+          elementTail,
+        );
     }
   }
 
-  #validateElementSchemaId(elementId: string): void {
+  #validateSchemaElementId(elementId: string): void {
     if (!isLetter(elementId)) {
       throw new ArgsException('INVALID_ARGUMENT_NAME', elementId, null);
     }
