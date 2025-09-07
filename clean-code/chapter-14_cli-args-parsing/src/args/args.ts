@@ -27,23 +27,22 @@ export class Args {
 
     this.#validateSchemaElementId(elementId);
 
-    switch (true) {
-      case elementTail.length === 0:
-        this.#marshalers.set(elementId, new BooleanArgumentMarshaler());
-      case elementTail === '*':
-        this.#marshalers.set(elementId, new StringArgumentMarshaler());
-      case elementTail === '#':
-        this.#marshalers.set(elementId, new IntegerArgumentMarshaler());
-      case elementTail === '##':
-        this.#marshalers.set(elementId, new FloatArgumentMarshaler());
-      case elementTail === '[*]':
-        this.#marshalers.set(elementId, new StringArrayArgumentMarshaler());
-      default:
-        throw new ArgsException(
-          'INVALID_ARGUMENT_FORMAT',
-          elementId,
-          elementTail,
-        );
+    if (elementTail.length === 0) {
+      this.#marshalers.set(elementId, new BooleanArgumentMarshaler());
+    } else if (elementTail === '*') {
+      this.#marshalers.set(elementId, new StringArgumentMarshaler());
+    } else if (elementTail === '#') {
+      this.#marshalers.set(elementId, new IntegerArgumentMarshaler());
+    } else if (elementTail === '##') {
+      this.#marshalers.set(elementId, new FloatArgumentMarshaler());
+    } else if (elementTail === '[*]') {
+      this.#marshalers.set(elementId, new StringArrayArgumentMarshaler());
+    } else {
+      throw new ArgsException(
+        'INVALID_ARGUMENT_FORMAT',
+        elementId,
+        elementTail,
+      );
     }
   }
 
@@ -67,8 +66,8 @@ export class Args {
 
   #parseArgumentCharacters(argChars: string): void {
     for (let i = 0; i < argChars.length; i++) {
-      const argChar = argChars[i];
-      if (argChar) this.#parseArgumentCharacter(argChar);
+      const argChar = argChars.charAt(i);
+      this.#parseArgumentCharacter(argChar);
     }
   }
 
