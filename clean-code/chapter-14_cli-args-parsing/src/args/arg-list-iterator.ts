@@ -11,6 +11,10 @@ export class ArgListIterator {
     return this.#list[this.#currentIndex];
   }
 
+  currentIndex(): number {
+    return this.#currentIndex;
+  }
+
   hasNext(): boolean {
     return this.#currentIndex < this.#list.length - 1;
   }

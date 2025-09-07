@@ -53,7 +53,6 @@ export class Args {
     }
   }
 
-  // @TODO Grasp this thoroughly
   #parseArgumentStrings(): void {
     while (this.#argListIterator.hasNext()) {
       const argString = this.#argListIterator.next();
