@@ -1,7 +1,13 @@
+import { ArgListIterator } from './arg-list-iterator.ts';
 import {
-  NoSuchElementException,
-  ArgListIterator,
-} from './arg-list-iterator.ts';
+  type ArgumentMarshaler,
+  BooleanArgumentMarshaler,
+  FloatArgumentMarshaler,
+  IntegerArgumentMarshaler,
+  StringArgumentMarshaler,
+  StringArrayArgumentMarshaler,
+} from './argument-marshalers.ts';
+import { ArgsException } from './args-exception.ts';
 import { isLowercaseLatinLetter } from './utils.ts';
 
 export class Args {
@@ -119,157 +125,3 @@ export class Args {
     return StringArrayArgumentMarshaler.getValue(this.#marshalers.get(arg));
   }
 }
-
-interface ArgumentMarshaler {
-  set(argListIterator: ArgListIterator): void;
-}
-
-class BooleanArgumentMarshaler implements ArgumentMarshaler {
-  #booleanValue = false;
-
-  set() {
-    this.#booleanValue = true;
-  }
-
-  static getValue(am: ArgumentMarshaler | undefined): boolean {
-    if (am instanceof BooleanArgumentMarshaler) {
-      return am.#booleanValue;
-    }
-    return false;
-  }
-}
-
-class StringArgumentMarshaler implements ArgumentMarshaler {
-  #stringValue = '';
-
-  set(argListIterator: ArgListIterator) {
-    try {
-      this.#stringValue = argListIterator.next();
-    } catch (error) {
-      if (error instanceof NoSuchElementException) {
-        throw new ArgsException('MISSING_STRING');
-      }
-    }
-  }
-
-  static getValue(am: ArgumentMarshaler | undefined): string {
-    if (am instanceof StringArgumentMarshaler) {
-      am.#stringValue;
-    }
-    return '';
-  }
-}
-
-class IntegerArgumentMarshaler implements ArgumentMarshaler {
-  #intValue = 0;
-
-  set(argListIterator: ArgListIterator) {
-    try {
-      const argString = argListIterator.next();
-      const parsedArg = Number.parseInt(argString);
-
-      if (!Number.isInteger(parsedArg)) {
-        throw new ArgsException('INVALID_INTEGER');
-      }
-      this.#intValue = parsedArg;
-    } catch (error) {
-      if (error instanceof ArgsException) throw error;
-      if (error instanceof NoSuchElementException) {
-        throw new ArgsException('MISSING_INTEGER');
-      }
-    }
-  }
-
-  static getValue(am: ArgumentMarshaler | undefined): number {
-    if (am instanceof IntegerArgumentMarshaler) {
-      return am.#intValue;
-    }
-    return 0;
-  }
-}
-
-class FloatArgumentMarshaler implements ArgumentMarshaler {
-  #floatValue = 0;
-
-  set(argListIterator: ArgListIterator) {
-    try {
-      const argString = argListIterator.next();
-      const parsedArg = Number.parseInt(argString);
-
-      if (Number.isNaN(parsedArg)) {
-        throw new ArgsException('INVALID_FLOAT');
-      }
-      this.#floatValue = parsedArg;
-    } catch (error) {
-      if (error instanceof NoSuchElementException) {
-        throw new ArgsException('MISSING_FLOAT');
-      }
-    }
-  }
-
-  static getValue(am: ArgumentMarshaler | undefined): number {
-    if (am instanceof FloatArgumentMarshaler) {
-      return am.#floatValue;
-    }
-    return 0;
-  }
-}
-
-class StringArrayArgumentMarshaler implements ArgumentMarshaler {
-  #stringArrayValue: string[] = [];
-
-  set(argListIterator: ArgListIterator) {
-    try {
-      const argString = argListIterator.next();
-      const opener = argString.at(0);
-      const closer = argString.at(-1);
-
-      if (opener !== '[' || closer !== ']') {
-        throw new ArgsException('INVALID_STRING_ARRAY');
-      }
-
-      const argSeries = argString.slice(1, -1);
-      const argArray = argSeries.split(',');
-      this.#stringArrayValue = argArray;
-    } catch (error) {
-      if (error instanceof ArgsException) throw error;
-      if (error instanceof NoSuchElementException) {
-        throw new ArgsException('MISSING_STRING_ARRAY');
-      }
-    }
-  }
-
-  static getValue(am: ArgumentMarshaler | undefined): string[] {
-    if (am instanceof StringArrayArgumentMarshaler) {
-      return am.#stringArrayValue;
-    }
-    return [];
-  }
-}
-
-export class ArgsException extends Error {
-  // @TODO Maybe add overloads?
-  constructor(type: ArgsExceptionType, elementId?: string, extra?: any) {
-    super();
-  }
-
-  errorMessage(): string {
-    return this.toString();
-  }
-
-  setArgumentId(argumentId: string) {
-    // @TODO implement
-  }
-}
-
-type ArgsExceptionType =
-  | 'INVALID_ARGUMENT_FORMAT'
-  | 'INVALID_ARGUMENT_NAME'
-  | 'UNEXPECTED_ARGUMENT'
-  | 'INVALID_INTEGER'
-  | 'INVALID_FLOAT'
-  | 'INVALID_STRING_ARRAY'
-  | 'MISSING_INTEGER'
-  | 'MISSING_FLOAT'
-  | 'MISSING_STRING'
-  | 'MISSING_STRING_ARRAY';

@@ -1,5 +1,6 @@
 import { describe, test, expect } from 'vitest';
-import { Args, ArgsException } from './args.ts';
+import { Args } from './args.ts';
+import { ArgsException } from './args-exception.ts';
 
 describe('Args', () => {
   const executeApplication = (...anyParams: any[]) => {
