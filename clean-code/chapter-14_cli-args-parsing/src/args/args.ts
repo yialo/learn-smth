@@ -1,5 +1,5 @@
 import { ArgListIterator } from './arg-list-iterator.ts';
-import { isLetter } from './utils.ts';
+import { isLowercaseLatinLetter } from './utils.ts';
 
 export class Args {
   #marshalers = new Map<string, ArgumentMarshaler>();
@@ -48,7 +48,7 @@ export class Args {
   }
 
   #validateSchemaElementId(elementId: string): void {
-    if (!isLetter(elementId)) {
+    if (!isLowercaseLatinLetter(elementId)) {
       throw new ArgsException('INVALID_ARGUMENT_NAME', elementId, null);
     }
   }
@@ -120,7 +120,7 @@ export class Args {
 }
 
 interface ArgumentMarshaler {
-  set(argListWalker: ArgListIterator): void;
+  set(argListIterator: ArgListIterator): void;
 }
 
 class BooleanArgumentMarshaler implements ArgumentMarshaler {

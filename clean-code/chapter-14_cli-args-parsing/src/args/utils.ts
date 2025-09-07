@@ -1,1 +1,1 @@
-export const isLetter = (str: string) => /^[a-z]$/.test(str);
+export const isLowercaseLatinLetter = (str: string) => /^[a-z]$/.test(str);
