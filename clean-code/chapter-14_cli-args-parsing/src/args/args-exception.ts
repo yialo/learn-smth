@@ -50,12 +50,46 @@ export class ArgsException extends Error {
 
   // @TODO add full-fledged implementation
   errorMessage(): string {
-    return this.toString();
+    // return this.toString();
 
-    /* switch (this.#errorCode) {
+    switch (this.#errorCode) {
       case 'OK':
         return 'TILT: Should not get here.';
-    } */
+      case 'UNEXPECTED_ARGUMENT':
+        return `Argument ${this.#errorArgumentId} unexpected.`;
+      case 'INVALID_ARGUMENT_FORMAT':
+        return `${this.#errorParameter} is not a valid argument format.`;
+      case 'INVALID_ARGUMENT_NAME':
+        return `${this.#errorArgumentId} is not a valid argument name.`;
+      case 'INVALID_FLOAT':
+        return `Argument ${
+          this.#errorArgumentId
+        } expects a float number but was ${this.#errorParameter}.`;
+      case 'INVALID_INTEGER':
+        return `Argument ${this.#errorArgumentId} expects an interger but was ${
+          this.#errorParameter
+        }.`;
+      case 'INVALID_STRING_ARRAY':
+        return `Argument ${
+          this.#errorArgumentId
+        } expects a string array but was ${this.#errorParameter}.`;
+      case 'MISSING_FLOAT':
+        return `$Could not find float number paramater for ${
+          this.#errorArgumentId
+        }.`;
+      case 'MISSING_INTEGER':
+        return `$Could not find integer paramater for ${
+          this.#errorArgumentId
+        }.`;
+      case 'MISSING_STRING_ARRAY':
+        return `$Could not find string array paramater for ${
+          this.#errorArgumentId
+        }.`;
+      case 'MISSING_STRING':
+        return `Could not find string parameter for ${this.#errorArgumentId}`;
+      default:
+        return '';
+    }
   }
 }
 

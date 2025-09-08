@@ -15,8 +15,8 @@ export class Args {
   #argsFound = new Set<string>();
   #argListIterator: ArgListIterator;
 
-  constructor(schema: string, inputArgs: string[]) {
-    this.#argListIterator = new ArgListIterator(inputArgs);
+  constructor(schema: string, argList: string[]) {
+    this.#argListIterator = new ArgListIterator(argList);
 
     this.#parseSchema(schema);
     this.#parseArgumentStrings();
@@ -61,13 +61,21 @@ export class Args {
     }
   }
 
+  /* @NOTE:
+  The most non-obvious thing here is that almost each marshaler updates the implicit shared state of the Args class kept in `this.#argListIterator` private field.
+  The iterator structure initially looks too complicated and overkilling, but this makes sense if we need to track some parallel iteration progress - e.g., in #parseArgumentCharacters() `for` loop and via `argList` itself.
+ */
   #parseArgumentStrings(): void {
     while (this.#argListIterator.hasNext()) {
-      const argString = this.#argListIterator.next();
-      if (argString?.startsWith('-')) {
-        this.#parseArgumentCharacters(argString.substring(1));
+      const argListElement = this.#argListIterator.next();
+      const isFlag = argListElement?.startsWith('-');
+      if (isFlag) {
+        const flagString = argListElement.substring(1);
+        this.#parseArgumentCharacters(flagString);
       } else {
-        this.#argListIterator.previous();
+        if (this.#argListIterator.hasPrevious()) {
+          this.#argListIterator.previous();
+        }
         break;
       }
     }

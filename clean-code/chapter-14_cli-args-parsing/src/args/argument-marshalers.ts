@@ -38,7 +38,7 @@ export class StringArgumentMarshaler implements ArgumentMarshaler {
 
   static getValue(am: ArgumentMarshaler | undefined): string {
     if (am instanceof StringArgumentMarshaler) {
-      am.#stringValue;
+      return am.#stringValue;
     }
     return '';
   }
@@ -49,8 +49,8 @@ export class IntegerArgumentMarshaler implements ArgumentMarshaler {
 
   set(argListIterator: ArgListIterator) {
     try {
-      const argString = argListIterator.next();
-      const parsedArg = Number.parseInt(argString);
+      const argListElement = argListIterator.next();
+      const parsedArg = Number.parseInt(argListElement);
 
       if (!Number.isInteger(parsedArg)) {
         throw new ArgsException('INVALID_INTEGER');
@@ -77,8 +77,8 @@ export class FloatArgumentMarshaler implements ArgumentMarshaler {
 
   set(argListIterator: ArgListIterator) {
     try {
-      const argString = argListIterator.next();
-      const parsedArg = Number.parseInt(argString);
+      const argListElement = argListIterator.next();
+      const parsedArg = Number.parseFloat(argListElement);
 
       if (Number.isNaN(parsedArg)) {
         throw new ArgsException('INVALID_FLOAT');
@@ -104,15 +104,15 @@ export class StringArrayArgumentMarshaler implements ArgumentMarshaler {
 
   set(argListIterator: ArgListIterator) {
     try {
-      const argString = argListIterator.next();
-      const opener = argString.at(0);
-      const closer = argString.at(-1);
+      const argListElement = argListIterator.next();
+      const opener = argListElement.at(0);
+      const closer = argListElement.at(-1);
 
       if (opener !== '[' || closer !== ']') {
         throw new ArgsException('INVALID_STRING_ARRAY');
       }
 
-      const argSeries = argString.slice(1, -1);
+      const argSeries = argListElement.slice(1, -1);
       const argArray = argSeries.split(',');
       this.#stringArrayValue = argArray;
     } catch (error) {

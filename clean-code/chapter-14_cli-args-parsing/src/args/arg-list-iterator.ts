@@ -1,3 +1,6 @@
+/* @NOTE
+  Partial implementation trial `ListIterator` class of Java Collection Framework.
+ */
 export class ArgListIterator {
   readonly #list: string[];
   #currentIndex: number;

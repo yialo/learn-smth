@@ -1,53 +1,84 @@
 import { describe, test, expect } from 'vitest';
 import { Args } from './args.ts';
-import { ArgsException } from './args-exception.ts';
 
 describe('Args', () => {
-  const executeApplication = (...anyParams: any[]) => {
-    console.log('[executeApplication]', ...anyParams);
+  const logParams = (...anyParams: any[]) => {
+    console.log('[logParams]', JSON.stringify(anyParams, null, 2));
   };
 
-  // @FIXME
-  test('happy path', () => {
-    const schema = 'l,p#,c##,d*,n[*]';
+  test('separate flags', () => {
+    const schema = 'l,p#,t##,d*,n[*]';
     const inputArgs = [
       '-l',
       '-p',
       '3000',
       '-d',
       '/usr/logs',
-      '-c',
-      '6',
+      '-t',
+      '27.5',
       '-n',
-      '[Alice,Bob,Crack]',
+      '[Alice,Bob,Clark]',
     ];
 
     const args = new Args(schema, inputArgs);
     const shouldLog = args.getBoolean('l');
     const port = args.getInteger('p');
     const directory = args.getString('d');
+    const temperature = args.getFloat('t');
+    const names = args.getStringArray('n');
 
-    executeApplication(shouldLog, port, directory);
+    logParams({ shouldLog, port, directory, temperature, names });
+
+    expect(shouldLog).toBe(true);
+    expect(port).toBe(3000);
+    expect(directory).toBe('/usr/logs');
+    expect(temperature).toBe(27.5);
+    expect(names).toEqual(['Alice', 'Bob', 'Clark']);
   });
 
-  // @FIXME
-  test.skip('sad path', () => {
-    try {
-      const schema = 'l,p#,d*';
-      const inputArgs = ['-l', 'bad', '-p', '-d', '823'];
+  test('joint flags', () => {
+    const schema = 'l,p#,t##,d*,n[*]';
+    const inputArgs = [
+      '-lndpt',
+      '[Alice,Bob,Clark]',
+      '/usr/logs',
+      '3000',
+      '27.5',
+    ];
 
-      const args = new Args(schema, inputArgs);
-      const shouldLog = args.getBoolean('l');
-      const port = args.getInteger('p');
-      const directory = args.getString('d');
+    const args = new Args(schema, inputArgs);
+    const shouldLog = args.getBoolean('l');
+    const port = args.getInteger('p');
+    const directory = args.getString('d');
+    const temperature = args.getFloat('t');
+    const names = args.getStringArray('n');
 
-      executeApplication(shouldLog, port, directory);
-    } catch (error) {
-      if (error instanceof ArgsException) {
-        console.log('Argument error:', error.errorMessage());
-      } else {
-        throw error;
-      }
-    }
+    logParams({ shouldLog, port, directory, temperature, names });
+
+    expect(shouldLog).toBe(true);
+    expect(port).toBe(3000);
+    expect(directory).toBe('/usr/logs');
+    expect(temperature).toBe(27.5);
+    expect(names).toEqual(['Alice', 'Bob', 'Clark']);
+  });
+
+  test('wrong: args input without any flags', () => {
+    const schema = 'l,p#,t##,d*,n[*]';
+    const inputArgs = ['bad'];
+
+    const args = new Args(schema, inputArgs);
+    const shouldLog = args.getBoolean('l');
+    const port = args.getInteger('p');
+    const directory = args.getString('d');
+    const temperature = args.getFloat('t');
+    const names = args.getStringArray('n');
+
+    logParams({ shouldLog, port, directory, temperature, names });
+
+    expect(shouldLog).toBe(false);
+    expect(port).toBe(0);
+    expect(directory).toBe('');
+    expect(temperature).toBe(0);
+    expect(names).toEqual([]);
   });
 });
