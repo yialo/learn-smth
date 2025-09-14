@@ -11,17 +11,17 @@ const showHeavyThing = true;
 
 export const SearchPage: React.FC = () => {
   const [query, setQuery] = React.useState('');
-  const [nonBlockingQuery, setNonBlockingQuery] = React.useState('');
+  const [query_nonBlocking, setQuery_nonBlocking] = React.useState('');
   const [isQueryPending, startQueryTransition] = React.useTransition();
 
   const getQueryTransition = (newQuery: string) => () => {
-    setNonBlockingQuery(newQuery);
+    setQuery_nonBlocking(newQuery);
   };
 
   const updateQuery = (newQuery: string) => {
     if (!applyTransition) {
       setQuery(newQuery);
-      setNonBlockingQuery(newQuery);
+      setQuery_nonBlocking(newQuery);
     } else if (applyTransitionHook) {
       setQuery(newQuery);
       startQueryTransition(getQueryTransition(newQuery));
@@ -47,9 +47,9 @@ export const SearchPage: React.FC = () => {
       <hr />
 
       {showHeavyThing ? (
-        <HeavyThing text={nonBlockingQuery} />
+        <HeavyThing text={query_nonBlocking} />
       ) : (
-        <SlowList text={nonBlockingQuery} />
+        <SlowList text={query_nonBlocking} />
       )}
     </div>
   );
