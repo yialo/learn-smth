@@ -3,14 +3,16 @@
 import { expect, it } from "vitest";
 import { z } from "zod";
 
-const Form = z.object({
+const formSchema = z.object({
   repoName: z.string(),
-  keywords: z.array(z.string()).optional(),
-  //                           ^ 🕵️‍♂️
+  keywords: z.array(z.string()).default([]),
 });
 
+type FormInput =z.input<typeof formSchema>
+type FormOutput = z.output<typeof formSchema> // the same as z.infer<typeof formSchema>
+
 export const validateFormInput = (values: unknown) => {
-  const parsedData = Form.parse(values);
+  const parsedData = formSchema.parse(values);
 
   return parsedData;
 };
