@@ -117,6 +117,12 @@ export type Scalars = {
    */
   AlertManagementHttpIntegrationID: { input: any; output: any; }
   /**
+   * A `AnalyticsCustomDashboardsDashboardID` is a global ID. It is encoded as a string.
+   *
+   * An example `AnalyticsCustomDashboardsDashboardID` is: `"gid://gitlab/Analytics::CustomDashboards::Dashboard/1"`.
+   */
+  AnalyticsCustomDashboardsDashboardID: { input: any; output: any; }
+  /**
    * A `AnalyticsCycleAnalyticsStageID` is a global ID. It is encoded as a string.
    *
    * An example `AnalyticsCycleAnalyticsStageID` is: `"gid://gitlab/Analytics::CycleAnalytics::Stage/1"`.
@@ -1049,6 +1055,12 @@ export type Scalars = {
   /** String or integer. */
   PayloadAlertFieldPathSegment: { input: any; output: any; }
   /**
+   * A `PersonalAccessTokenID` is a global ID. It is encoded as a string.
+   *
+   * An example `PersonalAccessTokenID` is: `"gid://gitlab/PersonalAccessToken/1"`.
+   */
+  PersonalAccessTokenID: { input: any; output: any; }
+  /**
    * A `ProjectHookID` is a global ID. It is encoded as a string.
    *
    * An example `ProjectHookID` is: `"gid://gitlab/ProjectHook/1"`.
@@ -1516,6 +1528,10 @@ export type AccessTokenPermission = {
   name: Scalars['String']['output'];
   /** Resource of the permission. */
   resource: Scalars['String']['output'];
+  /** Description of the resource. */
+  resourceDescription?: Maybe<Scalars['String']['output']>;
+  /** Display name of the resource. */
+  resourceName?: Maybe<Scalars['String']['output']>;
 };
 
 /** Values for sorting access tokens. */
@@ -2081,6 +2097,7 @@ export type AddOnUserPersonalAccessTokensArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   createdAfter?: InputMaybe<Scalars['Time']['input']>;
   expiresAfter?: InputMaybe<Scalars['Date']['input']>;
+  expiresBefore?: InputMaybe<Scalars['Date']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   lastUsedAfter?: InputMaybe<Scalars['Time']['input']>;
@@ -2834,6 +2851,8 @@ export type AiCatalogAgent = AiCatalogItem & {
   description: Scalars['String']['output'];
   /** Whether the item is a foundational agent (only on GitLab SaaS). */
   foundational: Scalars['Boolean']['output'];
+  /** Foundational flow reference. */
+  foundationalFlowReference?: Maybe<Scalars['String']['output']>;
   /** ID of the item. */
   id: Scalars['ID']['output'];
   /** Type of the item. */
@@ -3062,6 +3081,8 @@ export type AiCatalogFlow = AiCatalogItem & {
   description: Scalars['String']['output'];
   /** Whether the item is a foundational flow (only on GitLab SaaS). */
   foundational: Scalars['Boolean']['output'];
+  /** Foundational flow reference. */
+  foundationalFlowReference?: Maybe<Scalars['String']['output']>;
   /** ID of the item. */
   id: Scalars['ID']['output'];
   /** Type of the item. */
@@ -3288,6 +3309,8 @@ export type AiCatalogItem = {
   createdAt: Scalars['Time']['output'];
   /** Description of the item. */
   description: Scalars['String']['output'];
+  /** Foundational flow reference. */
+  foundationalFlowReference?: Maybe<Scalars['String']['output']>;
   /** ID of the item. */
   id: Scalars['ID']['output'];
   /** Type of the item. */
@@ -3621,6 +3644,8 @@ export type AiCatalogThirdPartyFlow = AiCatalogItem & {
   createdAt: Scalars['Time']['output'];
   /** Description of the item. */
   description: Scalars['String']['output'];
+  /** Foundational flow reference. */
+  foundationalFlowReference?: Maybe<Scalars['String']['output']>;
   /** ID of the item. */
   id: Scalars['ID']['output'];
   /** Type of the item. */
@@ -4586,6 +4611,14 @@ export type AiModelSelectionOfferedModelEdge = {
   node?: Maybe<AiModelSelectionOfferedModel>;
 };
 
+export type AiNamespaceSettings = {
+  __typename?: 'AiNamespaceSettings';
+  /** Indicates whether the namespace has MCP enabled. */
+  duoWorkflowMcpEnabled: Scalars['Boolean']['output'];
+  /** Level of prompt injection protection for the namespace. */
+  promptInjectionProtectionLevel: PromptInjectionProtectionLevel;
+};
+
 export type AiResolveVulnerabilityInput = {
   /** Global ID of the resource to mutate. */
   resourceId: Scalars['AiModelID']['input'];
@@ -4943,6 +4976,33 @@ export type AiUserMetricsEdge = {
   /** The item at the end of the edge. */
   node?: Maybe<AiUserMetrics>;
 };
+
+/** Values for sorting AI user metrics. */
+export type AiUserMetricsSort =
+  /** Agent Platform total event count in ascending order. */
+  | 'AGENT_PLATFORM_TOTAL_COUNT_ASC'
+  /** Agent Platform total event count in descending order. */
+  | 'AGENT_PLATFORM_TOTAL_COUNT_DESC'
+  /** Chat total event count in ascending order. */
+  | 'CHAT_TOTAL_COUNT_ASC'
+  /** Chat total event count in descending order. */
+  | 'CHAT_TOTAL_COUNT_DESC'
+  /** Code Review total event count in ascending order. */
+  | 'CODE_REVIEW_TOTAL_COUNT_ASC'
+  /** Code Review total event count in descending order. */
+  | 'CODE_REVIEW_TOTAL_COUNT_DESC'
+  /** Code Suggestions total event count in ascending order. */
+  | 'CODE_SUGGESTIONS_TOTAL_COUNT_ASC'
+  /** Code Suggestions total event count in descending order. */
+  | 'CODE_SUGGESTIONS_TOTAL_COUNT_DESC'
+  /** Mcp total event count in ascending order. */
+  | 'MCP_TOTAL_COUNT_ASC'
+  /** Mcp total event count in descending order. */
+  | 'MCP_TOTAL_COUNT_DESC'
+  /** Troubleshoot Job total event count in ascending order. */
+  | 'TROUBLESHOOT_JOB_TOTAL_COUNT_ASC'
+  /** Troubleshoot Job total event count in descending order. */
+  | 'TROUBLESHOOT_JOB_TOTAL_COUNT_DESC';
 
 export type AiXrayReport = {
   __typename?: 'AiXrayReport';
@@ -7015,6 +7075,7 @@ export type AutocompletedUserPersonalAccessTokensArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   createdAfter?: InputMaybe<Scalars['Time']['input']>;
   expiresAfter?: InputMaybe<Scalars['Date']['input']>;
+  expiresBefore?: InputMaybe<Scalars['Date']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   lastUsedAfter?: InputMaybe<Scalars['Time']['input']>;
@@ -9646,10 +9707,7 @@ export type CiInputsSpec = {
   regex?: Maybe<Scalars['String']['output']>;
   /** Indicates whether the input is required. */
   required: Scalars['Boolean']['output'];
-  /**
-   * Conditional rules for dynamic input options. Introduced in GitLab 18.6: **Status**: Experiment.
-   * @deprecated **Status**: Experiment. Introduced in GitLab 18.6.
-   */
+  /** Conditional rules for dynamic input options. */
   rules?: Maybe<Array<CiInputsRule>>;
   /** Input data type. */
   type: CiInputsType;
@@ -9866,36 +9924,13 @@ export type CiJobPreviousStageJobsOrNeedsArgs = {
 /** CI/CD job analytics data */
 export type CiJobAnalytics = {
   __typename?: 'CiJobAnalytics';
-  /** Average duration of jobs in seconds. */
-  meanDurationInSeconds?: Maybe<Scalars['Float']['output']>;
   /** Job name. */
   name?: Maybe<Scalars['String']['output']>;
-  /** 95th percentile duration of jobs in seconds. */
-  p95DurationInSeconds?: Maybe<Scalars['Float']['output']>;
-  /** Percentage of canceled jobs. */
-  rateOfCanceled?: Maybe<Scalars['Float']['output']>;
-  /** Percentage of failed jobs. */
-  rateOfFailed?: Maybe<Scalars['Float']['output']>;
-  /** Percentage of successful jobs. */
-  rateOfSuccess?: Maybe<Scalars['Float']['output']>;
   /** Stage information. */
   stage?: Maybe<CiStage>;
   /** Statistics for the jobs. */
   statistics?: Maybe<CiJobAnalyticsStatistics>;
 };
-
-/** Aggregation functions available for CI/CD job analytics */
-export type CiJobAnalyticsAggregation =
-  /** Average duration of jobs in seconds. */
-  | 'MEAN_DURATION_IN_SECONDS'
-  /** 95th percentile duration of jobs in seconds. */
-  | 'P95_DURATION_IN_SECONDS'
-  /** Percentage of canceled jobs. */
-  | 'RATE_OF_CANCELED'
-  /** Percentage of failed jobs. */
-  | 'RATE_OF_FAILED'
-  /** Percentage of successful jobs. */
-  | 'RATE_OF_SUCCESS';
 
 /** The connection type for CiJobAnalytics. */
 export type CiJobAnalyticsConnection = {
@@ -9917,13 +9952,6 @@ export type CiJobAnalyticsEdge = {
   node?: Maybe<CiJobAnalytics>;
 };
 
-/** Fields available for selection in CI/CD job analytics */
-export type CiJobAnalyticsField =
-  /** Job name. */
-  | 'NAME'
-  /** Stage. */
-  | 'STAGE';
-
 /** Values for sorting CI/CD job analytics */
 export type CiJobAnalyticsSort =
   /** Sort by canceled rate in ascending order. */
@@ -9942,10 +9970,26 @@ export type CiJobAnalyticsSort =
   | 'NAME_ASC'
   /** Sort by name in descending order. */
   | 'NAME_DESC'
+  /** Sort by 50th percentile duration in ascending order. */
+  | 'P50_DURATION_ASC'
+  /** Sort by 50th percentile duration in descending order. */
+  | 'P50_DURATION_DESC'
+  /** Sort by 75th percentile duration in ascending order. */
+  | 'P75_DURATION_ASC'
+  /** Sort by 75th percentile duration in descending order. */
+  | 'P75_DURATION_DESC'
+  /** Sort by 90th percentile duration in ascending order. */
+  | 'P90_DURATION_ASC'
+  /** Sort by 90th percentile duration in descending order. */
+  | 'P90_DURATION_DESC'
   /** Sort by 95th percentile duration in ascending order. */
   | 'P95_DURATION_ASC'
   /** Sort by 95th percentile duration in descending order. */
   | 'P95_DURATION_DESC'
+  /** Sort by 99th percentile duration in ascending order. */
+  | 'P99_DURATION_ASC'
+  /** Sort by 99th percentile duration in descending order. */
+  | 'P99_DURATION_DESC'
   /** Sort by success rate in ascending order. */
   | 'SUCCESS_RATE_ASC'
   /** Sort by success rate in descending order. */
@@ -14537,7 +14581,7 @@ export type CountableVulnerability = NoteableInterface & Todoable & {
   externalIssueLinks: VulnerabilityExternalIssueLinkConnection;
   /** Indicates whether the vulnerability is a false positive. */
   falsePositive?: Maybe<Scalars['Boolean']['output']>;
-  /** Status of the secret token associated with this vulnerability. Returns `null` if the `validity_checks` feature flag is disabled. */
+  /** Status of the secret token associated with this vulnerability */
   findingTokenStatus?: Maybe<VulnerabilityFindingTokenStatus>;
   /**
    * Flags set on the vulnerability. Introduced in GitLab 18.5: **Status**: Experiment.
@@ -15038,6 +15082,33 @@ export type CreateContainerProtectionRepositoryRulePayload = {
   /** Container repository protection rule after mutation. */
   containerProtectionRepositoryRule?: Maybe<ContainerProtectionRepositoryRule>;
   /** Errors encountered during the mutation. */
+  errors: Array<Scalars['String']['output']>;
+};
+
+/** Autogenerated input type of CreateCustomDashboard */
+export type CreateCustomDashboardInput = {
+  /** A unique identifier for the client performing the mutation. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** Dashboard layout/config JSON. */
+  config: Scalars['JSON']['input'];
+  /** Dashboard description. */
+  description?: InputMaybe<Scalars['String']['input']>;
+  /** Dashboard name. */
+  name: Scalars['String']['input'];
+  /** Namespace to scope the dashboard to. */
+  namespaceId?: InputMaybe<Scalars['NamespaceID']['input']>;
+  /** Organization the dashboard belongs to. */
+  organizationId: Scalars['OrganizationsOrganizationID']['input'];
+};
+
+/** Autogenerated return type of CreateCustomDashboard. */
+export type CreateCustomDashboardPayload = {
+  __typename?: 'CreateCustomDashboardPayload';
+  /** A unique identifier for the client performing the mutation. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Newly created dashboard. */
+  dashboard?: Maybe<CustomDashboard>;
+  /** Errors encountered during creation. */
   errors: Array<Scalars['String']['output']>;
 };
 
@@ -15879,6 +15950,7 @@ export type CurrentUserPersonalAccessTokensArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   createdAfter?: InputMaybe<Scalars['Time']['input']>;
   expiresAfter?: InputMaybe<Scalars['Date']['input']>;
+  expiresBefore?: InputMaybe<Scalars['Date']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   lastUsedAfter?: InputMaybe<Scalars['Time']['input']>;
@@ -16122,6 +16194,35 @@ export type CurrentUserTodosCurrentUserTodosArgs = {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   state?: InputMaybe<TodoStateEnum>;
+};
+
+/** Customizable analytics dashboard */
+export type CustomDashboard = {
+  __typename?: 'CustomDashboard';
+  /** Dashboard layout and widget configuration. */
+  config: Scalars['JSON']['output'];
+  /** Timestamp when the dashboard was created. */
+  createdAt: Scalars['Time']['output'];
+  /** User who created the dashboard. */
+  createdBy: UserCore;
+  /** Optional summary or purpose of the dashboard. */
+  description?: Maybe<Scalars['String']['output']>;
+  /** Global ID of the custom dashboard. */
+  id: Scalars['AnalyticsCustomDashboardsDashboardID']['output'];
+  /** Version used for optimistic concurrency control. */
+  lockVersion: Scalars['Int']['output'];
+  /** Display name of the dashboard. */
+  name: Scalars['String']['output'];
+  /** Namespace scope of the dashboard, if any. */
+  namespace?: Maybe<Namespace>;
+  /** Organization that owns the dashboard. */
+  organization: Organization;
+  /** Project scope of the dashboard, if any. */
+  project?: Maybe<Project>;
+  /** Timestamp when the dashboard was last updated. */
+  updatedAt: Scalars['Time']['output'];
+  /** User who last updated the dashboard. */
+  updatedBy?: Maybe<UserCore>;
 };
 
 /** A custom emoji uploaded by user */
@@ -23591,6 +23692,11 @@ export type Group = GroupInterface & Todoable & {
    */
   aiMetricsBasic?: Maybe<AiMetricsBasic>;
   /**
+   * AI settings for the namespace. Introduced in GitLab 18.8: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.8.
+   */
+  aiSettings?: Maybe<AiNamespaceSettings>;
+  /**
    * AI-related data. Introduced in GitLab 17.5: **Status**: Experiment.
    * @deprecated **Status**: Experiment. Introduced in GitLab 17.5.
    */
@@ -24100,6 +24206,11 @@ export type Group = GroupInterface & Todoable & {
   /** Permission level required to create subgroups within the group. */
   subgroupCreationLevel?: Maybe<Scalars['String']['output']>;
   /**
+   * Maximum number of subscribed saved views allowed on the namespace. Introduced in GitLab 18.8: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.8.
+   */
+  subscribedSavedViewLimit: Scalars['Int']['output'];
+  /**
    * Find subscription history records. Introduced in GitLab 17.3: **Status**: Experiment.
    * @deprecated **Status**: Experiment. Introduced in GitLab 17.3.
    */
@@ -24270,6 +24381,7 @@ export type GroupAiUserMetricsArgs = {
   endDate?: InputMaybe<Scalars['Date']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<AiUserMetricsSort>;
   startDate?: InputMaybe<Scalars['Date']['input']>;
 };
 
@@ -26187,6 +26299,11 @@ export type GroupPermissions = {
   readCrmOrganization: Scalars['Boolean']['output'];
   /** If `true`, the user can perform `read_group` on this resource */
   readGroup: Scalars['Boolean']['output'];
+  /**
+   * If `true`, the user can perform `read_runner_cloud_provisioning_info` on this resource Introduced in GitLab 18.8: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.8.
+   */
+  readRunnerCloudProvisioningInfo: Scalars['Boolean']['output'];
   /** If `true`, the user can perform `remove_group` on this resource */
   removeGroup: Scalars['Boolean']['output'];
   /** If `true`, the user can perform `view_edit_page` on this resource */
@@ -32088,6 +32205,7 @@ export type MergeRequestAssigneePersonalAccessTokensArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   createdAfter?: InputMaybe<Scalars['Time']['input']>;
   expiresAfter?: InputMaybe<Scalars['Date']['input']>;
+  expiresBefore?: InputMaybe<Scalars['Date']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   lastUsedAfter?: InputMaybe<Scalars['Time']['input']>;
@@ -32598,6 +32716,7 @@ export type MergeRequestAuthorPersonalAccessTokensArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   createdAfter?: InputMaybe<Scalars['Time']['input']>;
   expiresAfter?: InputMaybe<Scalars['Date']['input']>;
+  expiresBefore?: InputMaybe<Scalars['Date']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   lastUsedAfter?: InputMaybe<Scalars['Time']['input']>;
@@ -33310,6 +33429,7 @@ export type MergeRequestParticipantPersonalAccessTokensArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   createdAfter?: InputMaybe<Scalars['Time']['input']>;
   expiresAfter?: InputMaybe<Scalars['Date']['input']>;
+  expiresBefore?: InputMaybe<Scalars['Date']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   lastUsedAfter?: InputMaybe<Scalars['Time']['input']>;
@@ -33860,6 +33980,7 @@ export type MergeRequestReviewerPersonalAccessTokensArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   createdAfter?: InputMaybe<Scalars['Time']['input']>;
   expiresAfter?: InputMaybe<Scalars['Date']['input']>;
+  expiresBefore?: InputMaybe<Scalars['Date']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   lastUsedAfter?: InputMaybe<Scalars['Time']['input']>;
@@ -35655,6 +35776,11 @@ export type Mutation = {
    * @deprecated **Status**: Experiment. Introduced in GitLab 17.8.
    */
   createContainerProtectionTagRule?: Maybe<CreateContainerProtectionTagRulePayload>;
+  /**
+   * Creates a custom dashboard in an organization. Introduced in GitLab 18.7: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.7.
+   */
+  createCustomDashboard?: Maybe<CreateCustomDashboardPayload>;
   createCustomEmoji?: Maybe<CreateCustomEmojiPayload>;
   createDiffNote?: Maybe<CreateDiffNotePayload>;
   createDiscussion?: Maybe<CreateDiscussionPayload>;
@@ -36021,6 +36147,16 @@ export type Mutation = {
    * @deprecated **Status**: Experiment. Introduced in GitLab 18.7.
    */
   personalAccessTokenCreate?: Maybe<PersonalAccessTokenCreatePayload>;
+  /**
+   * Revokes a specified personal access token. Introduced in GitLab 18.8: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.8.
+   */
+  personalAccessTokenRevoke?: Maybe<PersonalAccessTokenRevokePayload>;
+  /**
+   * Rotate a specified personal access token. Introduced in GitLab 18.7: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.7.
+   */
+  personalAccessTokenRotate?: Maybe<PersonalAccessTokenRotatePayload>;
   pipelineCancel?: Maybe<PipelineCancelPayload>;
   pipelineCreate?: Maybe<PipelineCreatePayload>;
   pipelineDestroy?: Maybe<PipelineDestroyPayload>;
@@ -36167,7 +36303,7 @@ export type Mutation = {
   securityPolicyProjectUnassign?: Maybe<SecurityPolicyProjectUnassignPayload>;
   securityTrainingUpdate?: Maybe<SecurityTrainingUpdatePayload>;
   /**
-   * Enable/disable Container Scanning for Registry for the given project.
+   * Enable/disable container scanning for registry for the given project.
    *
    */
   setContainerScanningForRegistry?: Maybe<SetContainerScanningForRegistryPayload>;
@@ -36331,6 +36467,11 @@ export type Mutation = {
   valueStreamUpdate?: Maybe<ValueStreamUpdatePayload>;
   /** Create a verified namespace and mark all child catalog resources with the passed verification level info. */
   verifiedNamespaceCreate?: Maybe<VerifiedNamespaceCreatePayload>;
+  /**
+   * Create or update virtual registries cleanup policy for a root group. Introduced in GitLab 18.7: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.7.
+   */
+  virtualRegistriesCleanupPolicyUpsert?: Maybe<VirtualRegistriesCleanupPolicyUpsertPayload>;
   /** @deprecated **Status**: Experiment. Introduced in GitLab 17.10. */
   vulnerabilitiesArchive?: Maybe<VulnerabilitiesArchivePayload>;
   /** @deprecated **Status**: Experiment. Introduced in GitLab 17.9. */
@@ -37059,6 +37200,11 @@ export type MutationCreateContainerProtectionRepositoryRuleArgs = {
 
 export type MutationCreateContainerProtectionTagRuleArgs = {
   input: CreateContainerProtectionTagRuleInput;
+};
+
+
+export type MutationCreateCustomDashboardArgs = {
+  input: CreateCustomDashboardInput;
 };
 
 
@@ -38152,6 +38298,16 @@ export type MutationPersonalAccessTokenCreateArgs = {
 };
 
 
+export type MutationPersonalAccessTokenRevokeArgs = {
+  input: PersonalAccessTokenRevokeInput;
+};
+
+
+export type MutationPersonalAccessTokenRotateArgs = {
+  input: PersonalAccessTokenRotateInput;
+};
+
+
 export type MutationPipelineCancelArgs = {
   input: PipelineCancelInput;
 };
@@ -39017,6 +39173,11 @@ export type MutationVerifiedNamespaceCreateArgs = {
 };
 
 
+export type MutationVirtualRegistriesCleanupPolicyUpsertArgs = {
+  input: VirtualRegistriesCleanupPolicyUpsertInput;
+};
+
+
 export type MutationVulnerabilitiesArchiveArgs = {
   input: VulnerabilitiesArchiveInput;
 };
@@ -39263,6 +39424,11 @@ export type Namespace = Todoable & {
   addOnEligibleUsers?: Maybe<AddOnUserConnection>;
   /** Additional storage purchased for the root namespace in bytes. */
   additionalPurchasedStorageSize?: Maybe<Scalars['Float']['output']>;
+  /**
+   * AI settings for the namespace. Introduced in GitLab 18.8: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.8.
+   */
+  aiSettings?: Maybe<AiNamespaceSettings>;
   /** Approval Policies of the project */
   approvalPolicies?: Maybe<ApprovalPolicyConnection>;
   /**
@@ -39415,6 +39581,11 @@ export type Namespace = Todoable & {
   statuses?: Maybe<WorkItemStatusConnection>;
   /** The storage limit (in bytes) included with the root namespace plan. This limit only applies to namespaces under namespace limit enforcement. */
   storageSizeLimit?: Maybe<Scalars['Float']['output']>;
+  /**
+   * Maximum number of subscribed saved views allowed on the namespace. Introduced in GitLab 18.8: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.8.
+   */
+  subscribedSavedViewLimit: Scalars['Int']['output'];
   /**
    * Find subscription history records. Introduced in GitLab 17.3: **Status**: Experiment.
    * @deprecated **Status**: Experiment. Introduced in GitLab 17.3.
@@ -39918,6 +40089,11 @@ export type NamespaceAvailableFeatures = {
    * @deprecated **Status**: Experiment. Introduced in GitLab 18.3.
    */
   hasWorkItemStatusFeature: Scalars['Boolean']['output'];
+  /**
+   * Whether work item saved views are enabled for the namespace. Introduced in GitLab 18.8: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.8.
+   */
+  hasWorkItemsSavedViewsFeature: Scalars['Boolean']['output'];
 };
 
 export type NamespaceBan = {
@@ -41304,7 +41480,6 @@ export type OrganizationProjectsArgs = {
   searchNamespaces?: InputMaybe<Scalars['Boolean']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
   topics?: InputMaybe<Array<Scalars['String']['input']>>;
-  trending?: InputMaybe<Scalars['Boolean']['input']>;
   visibilityLevel?: InputMaybe<VisibilityLevelsEnum>;
   withIssuesEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   withMergeRequestsEnabled?: InputMaybe<Scalars['Boolean']['input']>;
@@ -42943,12 +43118,20 @@ export type PersonalAccessToken = {
 /** The connection type for PersonalAccessToken. */
 export type PersonalAccessTokenConnection = {
   __typename?: 'PersonalAccessTokenConnection';
+  /** Total count of collection. Returns limit + 1 for counts greater than the limit. */
+  count: Scalars['Int']['output'];
   /** A list of edges. */
   edges?: Maybe<Array<Maybe<PersonalAccessTokenEdge>>>;
   /** A list of nodes. */
   nodes?: Maybe<Array<Maybe<PersonalAccessToken>>>;
   /** Information to aid in pagination. */
   pageInfo: PageInfo;
+};
+
+
+/** The connection type for PersonalAccessToken. */
+export type PersonalAccessTokenConnectionCountArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** Autogenerated input type of PersonalAccessTokenCreate */
@@ -42973,7 +43156,7 @@ export type PersonalAccessTokenCreatePayload = {
   /** Errors encountered during the mutation. */
   errors: Array<Scalars['String']['output']>;
   /** Created personal access token. */
-  token?: Maybe<PersonalAccessToken>;
+  token?: Maybe<Scalars['String']['output']>;
 };
 
 /** An edge in a connection. */
@@ -42983,6 +43166,42 @@ export type PersonalAccessTokenEdge = {
   cursor: Scalars['String']['output'];
   /** The item at the end of the edge. */
   node?: Maybe<PersonalAccessToken>;
+};
+
+/** Autogenerated input type of PersonalAccessTokenRevoke */
+export type PersonalAccessTokenRevokeInput = {
+  /** A unique identifier for the client performing the mutation. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** Global ID of the personal access token that will be revoked. */
+  id: Scalars['PersonalAccessTokenID']['input'];
+};
+
+/** Autogenerated return type of PersonalAccessTokenRevoke. */
+export type PersonalAccessTokenRevokePayload = {
+  __typename?: 'PersonalAccessTokenRevokePayload';
+  /** A unique identifier for the client performing the mutation. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Errors encountered during the mutation. */
+  errors: Array<Scalars['String']['output']>;
+};
+
+/** Autogenerated input type of PersonalAccessTokenRotate */
+export type PersonalAccessTokenRotateInput = {
+  /** A unique identifier for the client performing the mutation. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** Global ID of the personal access token that will be rotated. */
+  id: Scalars['PersonalAccessTokenID']['input'];
+};
+
+/** Autogenerated return type of PersonalAccessTokenRotate. */
+export type PersonalAccessTokenRotatePayload = {
+  __typename?: 'PersonalAccessTokenRotatePayload';
+  /** A unique identifier for the client performing the mutation. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Errors encountered during the mutation. */
+  errors: Array<Scalars['String']['output']>;
+  /** Created personal access token. */
+  token?: Maybe<Scalars['String']['output']>;
 };
 
 /** Scope applied to a personal access token. */
@@ -45006,7 +45225,7 @@ export type Project = ProjectInterface & Todoable & {
   containerRepositories?: Maybe<ContainerRepositoryConnection>;
   /** Number of container repositories in the project. */
   containerRepositoriesCount: Scalars['Int']['output'];
-  /** Indicates whether Container Scanning for Registry is enabled or not for the project. Returns `null` if unauthorized. */
+  /** Indicates whether container scanning for registry is enabled or not for the project. Returns `null` if unauthorized. */
   containerScanningForRegistryEnabled?: Maybe<Scalars['Boolean']['output']>;
   /** Container tags expiration policy of the project. */
   containerTagsExpirationPolicy?: Maybe<ContainerTagsExpirationPolicy>;
@@ -45671,6 +45890,7 @@ export type ProjectAiUserMetricsArgs = {
   endDate?: InputMaybe<Scalars['Date']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+  sort?: InputMaybe<AiUserMetricsSort>;
   startDate?: InputMaybe<Scalars['Date']['input']>;
 };
 
@@ -46376,14 +46596,12 @@ export type ProjectJobArgs = {
 
 export type ProjectJobAnalyticsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
-  aggregations?: Array<CiJobAnalyticsAggregation>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   fromTime?: InputMaybe<Scalars['Time']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   nameSearch?: InputMaybe<Scalars['String']['input']>;
   ref?: InputMaybe<Scalars['String']['input']>;
-  selectFields?: Array<CiJobAnalyticsField>;
   sort?: InputMaybe<CiJobAnalyticsSort>;
   source?: InputMaybe<CiPipelineSources>;
   toTime?: InputMaybe<Scalars['Time']['input']>;
@@ -48097,6 +48315,11 @@ export type ProjectPermissions = {
   readProject: Scalars['Boolean']['output'];
   /** If `true`, the user can perform `read_project_member` on this resource */
   readProjectMember: Scalars['Boolean']['output'];
+  /**
+   * If `true`, the user can perform `read_runner_cloud_provisioning_info` on this resource Introduced in GitLab 18.8: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.8.
+   */
+  readRunnerCloudProvisioningInfo: Scalars['Boolean']['output'];
   /** If `true`, the user can perform `read_wiki` on this resource */
   readWiki: Scalars['Boolean']['output'];
   /** If `true`, the user can perform `remove_fork_project` on this resource */
@@ -49415,6 +49638,15 @@ export type PromoteToEpicPayload = {
   issue?: Maybe<Issue>;
 };
 
+/** Values for prompt injection protection for a namespace. */
+export type PromptInjectionProtectionLevel =
+  /** Scan and block detected prompt injection attempts. */
+  | 'INTERRUPT'
+  /** Scan and log results, but do not block requests. */
+  | 'LOG_ONLY'
+  /** Turn off scanning entirely. No prompt data is sent to third-party services. */
+  | 'NO_CHECKS';
+
 /** Protected Environments of the environment. */
 export type ProtectedEnvironment = {
   __typename?: 'ProtectedEnvironment';
@@ -49708,6 +49940,11 @@ export type Query = {
   aiChatAvailableModels?: Maybe<AvailableModels>;
   /** Get available GitLab Duo Chat context presets for the current user for a specific URL */
   aiChatContextPresets?: Maybe<ContextPreset>;
+  /**
+   * Get projects that can be included by the current user in a GitLab Duo Chat context Introduced in GitLab 18.7: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.7.
+   */
+  aiChatIncludedProjects?: Maybe<ProjectConnection>;
   /**
    * List conversation threads of AI features. Introduced in GitLab 17.9: **Status**: Experiment.
    * @deprecated **Status**: Experiment. Introduced in GitLab 17.9.
@@ -50192,7 +50429,6 @@ export type QueryAdminProjectsArgs = {
   searchNamespaces?: InputMaybe<Scalars['Boolean']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
   topics?: InputMaybe<Array<Scalars['String']['input']>>;
-  trending?: InputMaybe<Scalars['Boolean']['input']>;
   visibilityLevel?: InputMaybe<VisibilityLevelsEnum>;
   withIssuesEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   withMergeRequestsEnabled?: InputMaybe<Scalars['Boolean']['input']>;
@@ -50217,6 +50453,7 @@ export type QueryAiCatalogConfiguredItemsArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
+  foundationalFlowReference?: InputMaybe<Scalars['String']['input']>;
   groupId?: InputMaybe<Scalars['GroupID']['input']>;
   includeInherited?: InputMaybe<Scalars['Boolean']['input']>;
   itemId?: InputMaybe<Scalars['AiCatalogItemID']['input']>;
@@ -50260,6 +50497,15 @@ export type QueryAiChatContextPresetsArgs = {
   questionCount?: InputMaybe<Scalars['Int']['input']>;
   resourceId?: InputMaybe<Scalars['AiModelID']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryAiChatIncludedProjectsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -50828,7 +51074,6 @@ export type QueryProjectsArgs = {
   searchNamespaces?: InputMaybe<Scalars['Boolean']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
   topics?: InputMaybe<Array<Scalars['String']['input']>>;
-  trending?: InputMaybe<Scalars['Boolean']['input']>;
   visibilityLevel?: InputMaybe<VisibilityLevelsEnum>;
   withIssuesEnabled?: InputMaybe<Scalars['Boolean']['input']>;
   withMergeRequestsEnabled?: InputMaybe<Scalars['Boolean']['input']>;
@@ -54126,7 +54371,7 @@ export type SecurityPolicyProjectUnassignPayload = {
 };
 
 export type SecurityPolicyRelationType =
-  /** Policies defined for the group's descendant projects/groups only. Only valid for group-level policies. */
+  /** Policies defined for the group's descendant projects/groups only. Only valid for group policies. Policies apply only to the 50 most recently created descendant policy projects. */
   | 'DESCENDANT'
   /** Policies defined for the project/group only. */
   | 'DIRECT'
@@ -54726,7 +54971,7 @@ export type ServiceType =
 export type SetContainerScanningForRegistryInput = {
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** Desired status for Container Scanning for Registry feature. */
+  /** Desired status for container scanning for registry feature. */
   enable: Scalars['Boolean']['input'];
   /** Full path of the namespace (project). */
   namespacePath: Scalars['ID']['input'];
@@ -58806,6 +59051,7 @@ export type UserPersonalAccessTokensArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   createdAfter?: InputMaybe<Scalars['Time']['input']>;
   expiresAfter?: InputMaybe<Scalars['Date']['input']>;
+  expiresBefore?: InputMaybe<Scalars['Date']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   lastUsedAfter?: InputMaybe<Scalars['Time']['input']>;
@@ -59735,6 +59981,7 @@ export type UserCorePersonalAccessTokensArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   createdAfter?: InputMaybe<Scalars['Time']['input']>;
   expiresAfter?: InputMaybe<Scalars['Date']['input']>;
+  expiresBefore?: InputMaybe<Scalars['Date']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   lastUsedAfter?: InputMaybe<Scalars['Time']['input']>;
@@ -59992,6 +60239,8 @@ export type UserGroupCalloutFeatureName =
   | 'CI_MINUTES_LIMIT_ALERT_WARNING_STAGE'
   /** Callout feature name for compliance_framework_settings_moved_callout. */
   | 'COMPLIANCE_FRAMEWORK_SETTINGS_MOVED_CALLOUT'
+  /** Callout feature name for end_of_trial_modal. */
+  | 'END_OF_TRIAL_MODAL'
   /** Callout feature name for enforcement_at_limit_alert. */
   | 'ENFORCEMENT_AT_LIMIT_ALERT'
   /** Callout feature name for expired_duo_enterprise_trial_widget. */
@@ -60871,6 +61120,35 @@ export type VerifiedNamespaceCreatePayload = {
   errors: Array<Scalars['String']['output']>;
 };
 
+/** Autogenerated input type of VirtualRegistriesCleanupPolicyUpsert */
+export type VirtualRegistriesCleanupPolicyUpsertInput = {
+  /** Job cadence for the cleanup process. Allowed values are 1, 7, 14, 30, 90. Default is 7. */
+  cadence?: InputMaybe<Scalars['Int']['input']>;
+  /** A unique identifier for the client performing the mutation. */
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** Enable or disable the virtual registries cleanup policy. Default is `false`. */
+  enabled?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Group path for the group virtual registries. */
+  fullPath: Scalars['ID']['input'];
+  /** Keep packages for the period after download. Range is 1-365. Default is 30. */
+  keepNDaysAfterDownload?: InputMaybe<Scalars['Int']['input']>;
+  /** Whether to notify group owners when cleanup runs fail. Default is `false`. */
+  notifyOnFailure?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Whether to notify group owners when cleanup runs succeed. Default is `false`. */
+  notifyOnSuccess?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+/** Autogenerated return type of VirtualRegistriesCleanupPolicyUpsert. */
+export type VirtualRegistriesCleanupPolicyUpsertPayload = {
+  __typename?: 'VirtualRegistriesCleanupPolicyUpsertPayload';
+  /** A unique identifier for the client performing the mutation. */
+  clientMutationId?: Maybe<Scalars['String']['output']>;
+  /** Errors encountered during the mutation. */
+  errors: Array<Scalars['String']['output']>;
+  /** Virtual registries cleanup policy after mutation. */
+  virtualRegistriesCleanupPolicy?: Maybe<VirtualRegistryCleanupPolicy>;
+};
+
 /** Root group level virtual registries settings */
 export type VirtualRegistriesSetting = {
   __typename?: 'VirtualRegistriesSetting';
@@ -60931,6 +61209,16 @@ export type VirtualRegistryCleanupPolicy = {
    * @deprecated **Status**: Experiment. Introduced in GitLab 18.7.
    */
   nextRunAt?: Maybe<Scalars['Time']['output']>;
+  /**
+   * Boolean to notify group owners on failed cleanup runs. Introduced in GitLab 18.7: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.7.
+   */
+  notifyOnFailure: Scalars['Boolean']['output'];
+  /**
+   * Boolean to notify group owners on successful cleanup runs. Introduced in GitLab 18.7: **Status**: Experiment.
+   * @deprecated **Status**: Experiment. Introduced in GitLab 18.7.
+   */
+  notifyOnSuccess: Scalars['Boolean']['output'];
   /**
    * Current execution status of the cleanup policy. Introduced in GitLab 18.7: **Status**: Experiment.
    * @deprecated **Status**: Experiment. Introduced in GitLab 18.7.
@@ -61195,7 +61483,7 @@ export type Vulnerability = NoteableInterface & Todoable & {
   externalIssueLinks: VulnerabilityExternalIssueLinkConnection;
   /** Indicates whether the vulnerability is a false positive. */
   falsePositive?: Maybe<Scalars['Boolean']['output']>;
-  /** Status of the secret token associated with this vulnerability. Returns `null` if the `validity_checks` feature flag is disabled. */
+  /** Status of the secret token associated with this vulnerability */
   findingTokenStatus?: Maybe<VulnerabilityFindingTokenStatus>;
   /**
    * Flags set on the vulnerability. Introduced in GitLab 18.5: **Status**: Experiment.
@@ -66566,12 +66854,13 @@ export type GetProjectIssueByIidQuery = { __typename?: 'Query', project?: { __ty
 export type GetProjectQueryVariables = Exact<{
   fullPath: Scalars['ID']['input'];
   first: Scalars['Int']['input'];
+  after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type GetProjectQuery = { __typename?: 'Query', project?: { __typename?: 'Project', id: string, issues?: { __typename?: 'IssueConnection', nodes?: Array<{ __typename?: 'Issue', id: string, name?: string | null } | null> | null } | null } | null };
+export type GetProjectQuery = { __typename?: 'Query', project?: { __typename?: 'Project', id: string, issues?: { __typename?: 'IssueConnection', nodes?: Array<{ __typename?: 'Issue', id: string, iid: string, name?: string | null, webUrl: string } | null> | null, pageInfo: { __typename?: 'PageInfo', endCursor?: string | null, hasNextPage: boolean } } | null } | null };
 
 
 export const GetIssueByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetIssueById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"IssueID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"issue"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]} as unknown as DocumentNode<GetIssueByIdQuery, GetIssueByIdQueryVariables>;
 export const GetProjectIssueByIidDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProjectIssueByIid"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fullPath"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"iid"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"fullPath"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fullPath"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"issue"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"iid"},"value":{"kind":"Variable","name":{"kind":"Name","value":"iid"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]} as unknown as DocumentNode<GetProjectIssueByIidQuery, GetProjectIssueByIidQueryVariables>;
-export const GetProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fullPath"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"fullPath"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fullPath"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"issues"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetProjectQuery, GetProjectQueryVariables>;
+export const GetProjectDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetProject"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"fullPath"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"project"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"fullPath"},"value":{"kind":"Variable","name":{"kind":"Name","value":"fullPath"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"issues"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"sort"},"value":{"kind":"EnumValue","value":"MILESTONE_DUE_DESC"}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"iid"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"webUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"endCursor"}},{"kind":"Field","name":{"kind":"Name","value":"hasNextPage"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GetProjectQuery, GetProjectQueryVariables>;

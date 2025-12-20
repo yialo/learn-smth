@@ -10,7 +10,26 @@ export const GraphqlProvider: React.FC<{ children: React.ReactNode }> = ({
     () =>
       new ApolloClient({
         link: new HttpLink({ uri: ENV.GRAPHQL_URI }),
-        cache: new InMemoryCache(),
+        cache: new InMemoryCache({
+          typePolicies: {
+            Project: {
+              fields: {
+                issues: {
+                  keyArgs: ['sort'],
+                },
+              },
+            },
+            IssueConnection: {
+              fields: {
+                nodes: {
+                  merge: <T,>(existing: T[] = [], incoming: T[]) => {
+                    return [...existing, ...incoming];
+                  },
+                },
+              },
+            },
+          },
+        }),
       }),
   );
 

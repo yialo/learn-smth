@@ -16,12 +16,12 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
 type Documents = {
     "\n  query GetIssueById($id: IssueID!) {\n    issue(id: $id) {\n      id\n      title\n    }\n  }\n": typeof types.GetIssueByIdDocument,
     "\n  query GetProjectIssueByIid($fullPath: ID!, $iid: String!) {\n    project(fullPath: $fullPath) {\n      id\n      issue(iid: $iid) {\n        id\n        title\n      }\n    }\n  }\n": typeof types.GetProjectIssueByIidDocument,
-    "\n  query GetProject($fullPath: ID!, $first: Int!) {\n    project(fullPath: $fullPath) {\n      id\n      issues(first: $first) {\n        nodes {\n          id\n          name\n        }\n      }\n    }\n  }\n": typeof types.GetProjectDocument,
+    "\n  query GetProject($fullPath: ID!, $first: Int!, $after: String) {\n    project(fullPath: $fullPath) {\n      id\n      issues(sort: MILESTONE_DUE_DESC, first: $first, after: $after) {\n        nodes {\n          id\n          iid\n          name\n          webUrl\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n  }\n": typeof types.GetProjectDocument,
 };
 const documents: Documents = {
     "\n  query GetIssueById($id: IssueID!) {\n    issue(id: $id) {\n      id\n      title\n    }\n  }\n": types.GetIssueByIdDocument,
     "\n  query GetProjectIssueByIid($fullPath: ID!, $iid: String!) {\n    project(fullPath: $fullPath) {\n      id\n      issue(iid: $iid) {\n        id\n        title\n      }\n    }\n  }\n": types.GetProjectIssueByIidDocument,
-    "\n  query GetProject($fullPath: ID!, $first: Int!) {\n    project(fullPath: $fullPath) {\n      id\n      issues(first: $first) {\n        nodes {\n          id\n          name\n        }\n      }\n    }\n  }\n": types.GetProjectDocument,
+    "\n  query GetProject($fullPath: ID!, $first: Int!, $after: String) {\n    project(fullPath: $fullPath) {\n      id\n      issues(sort: MILESTONE_DUE_DESC, first: $first, after: $after) {\n        nodes {\n          id\n          iid\n          name\n          webUrl\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n  }\n": types.GetProjectDocument,
 };
 
 /**
@@ -49,7 +49,7 @@ export function gql(source: "\n  query GetProjectIssueByIid($fullPath: ID!, $iid
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetProject($fullPath: ID!, $first: Int!) {\n    project(fullPath: $fullPath) {\n      id\n      issues(first: $first) {\n        nodes {\n          id\n          name\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetProject($fullPath: ID!, $first: Int!) {\n    project(fullPath: $fullPath) {\n      id\n      issues(first: $first) {\n        nodes {\n          id\n          name\n        }\n      }\n    }\n  }\n"];
+export function gql(source: "\n  query GetProject($fullPath: ID!, $first: Int!, $after: String) {\n    project(fullPath: $fullPath) {\n      id\n      issues(sort: MILESTONE_DUE_DESC, first: $first, after: $after) {\n        nodes {\n          id\n          iid\n          name\n          webUrl\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetProject($fullPath: ID!, $first: Int!, $after: String) {\n    project(fullPath: $fullPath) {\n      id\n      issues(sort: MILESTONE_DUE_DESC, first: $first, after: $after) {\n        nodes {\n          id\n          iid\n          name\n          webUrl\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
