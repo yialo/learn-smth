@@ -17,7 +17,7 @@ p {
   font-size: 2rem;
   animation-name: animateText;
   animation-timing-function: linear;
-  animation-duration: 1s;
+  animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-direction: alternate;
 }

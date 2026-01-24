@@ -2,114 +2,118 @@ import * as React from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 
-type TChildProps = {
-  text: React.ReactElement;
-  value: string;
-  onChange: React.ChangeEventHandler<HTMLInputElement>;
-};
-
-const staticTextElement: React.ReactElement = <p>Static text</p>;
-
-const Text: React.FC = () => {
-  React.useEffect(() => {
-    console.log('-- RERENDER: Text component');
-  });
-
-  return <p>Static component with text</p>;
-};
-
-const ChildA: React.FC<TChildProps> = ({ value, onChange, text }) => (
-  <div>
-    <input type="text" value={value} onChange={onChange} />
-    <p>Child A</p>
-    {staticTextElement}
-    {text}
-  </div>
-);
-
-const ChildB: React.FC<TChildProps> = ({ value, onChange, text }) => (
-  <div>
-    <input type="text" value={value} onChange={onChange} />
-    <p>Child B</p>
-    {staticTextElement}
-    {text}
-  </div>
-);
-
-const textComponentElement = <Text />;
-
-type TAppProps = {
-  text: React.ReactElement;
-};
-
-const App: React.FC<TAppProps> = ({ text }) => {
+const StatefulChildA: React.FC<{ slot: React.ReactElement }> = ({ slot }) => {
   const [hasText, setHasText] = React.useState(true);
-  const [inputValue, setInputValue] = React.useState('bob');
-
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    setInputValue(event.target.value);
-  };
 
   return (
     <div>
-      {/* {hasText && <p>Start editing to see some magic happen :)</p>}
-      <input type="text" /> */}
-
-      {/* {hasText ? (
-        <React.Fragment>
-          <p>Start editing to see some magic happen :)</p>
-          <input type="text" />
-        </React.Fragment>
-      ) : (
-        <input type="text" />
-      )} */}
-
-      {/* {hasText ? (
-        <ChildA
-          text={textComponentElement}
-          value={inputValue}
-          onChange={handleChange}
-        />
-      ) : (
-        <ChildB
-          text={textComponentElement}
-          value={inputValue}
-          onChange={handleChange}
-        />
-      )} */}
-
-      {text}
-
-      <p>{`hasText: ${hasText}`}</p>
-
-      <p className="animated" key={Number(hasText)}>
-        Text with key
-      </p>
-
-      <p className="animated">Text without key</p>
-
-      {hasText ? (
-        <p className="animated">Text without key in fragment</p>
-      ) : (
-        <>
-          <p className="animated">Text without key in fragment</p>
-        </>
-      )}
-
-      <button
-        type="button"
-        onClick={() => {
-          setHasText((prev) => !prev);
-        }}
+      <div
+        className="animated"
+        key={Number(hasText)}
+        style={{ marginBlockEnd: '2rem' }}
       >
-        Click
-      </button>
+        Element rendered inside Child A
+      </div>
+
+      <div style={{ marginBlockEnd: '2rem' }}>{slot}</div>
+
+      <div style={{ display: 'flex', columnGap: '1rem', alignItems: 'center' }}>
+        <button
+          type="button"
+          onClick={() => {
+            setHasText((prev) => !prev);
+          }}
+        >
+          Rerender Child A
+        </button>
+        <p>{`[Stateful Child A] hasText: ${hasText}`}</p>
+      </div>
+    </div>
+  );
+};
+
+const StatefulChildB: React.FC<{ slot: React.ReactElement }> = ({ slot }) => {
+  const [hasText, setHasText] = React.useState(true);
+
+  return (
+    <div>
+      <div
+        className="animated"
+        key={Number(hasText)}
+        style={{ marginBlockEnd: '2rem' }}
+      >
+        Element rendered inside Child B
+      </div>
+
+      <div style={{ marginBlockEnd: '2rem' }}>{slot}</div>
+
+      <div style={{ display: 'flex', columnGap: '1rem', alignItems: 'center' }}>
+        <button
+          type="button"
+          onClick={() => {
+            setHasText((prev) => !prev);
+          }}
+        >
+          Rerender Child B
+        </button>
+        <p>{`[Stateful Child B] hasText: ${hasText}`}</p>
+      </div>
+    </div>
+  );
+};
+
+// Case: static slotContent
+const slotContent = (
+  <div className="animated">Element passed to Child slot</div>
+);
+
+const App: React.FC = () => {
+  const [hasText, setHasText] = React.useState(true);
+
+  // Case: slotContent without key
+  /* const slotContent = (
+    <div className="animated">Element passed to Child slot</div>
+  ); */
+
+  // Case: slotContent with key
+  /* const slotContent = (
+    <div className="animated" key={Number(hasText)}>
+      Element passed to Child slot
+    </div>
+  ); */
+
+  return (
+    <div>
+      {/* Case: Child A/B swap */}
+      {/* {hasText ? (
+        <StatefulChildA slot={slotContent} />
+      ) : (
+        <StatefulChildB slot={slotContent} />
+      )} */}
+
+      {/* Case: single Child without key */}
+      {/* <StatefulChildA slot={slotContent} /> */}
+
+      {/* Case: single Child with key */}
+      <StatefulChildA slot={slotContent} key={Number(hasText)} />
+
+      <div style={{ display: 'flex', columnGap: '1rem', alignItems: 'center' }}>
+        <button
+          type="button"
+          onClick={() => {
+            setHasText((prev) => !prev);
+          }}
+        >
+          Rerender App
+        </button>
+        <p>{`[App] hasText: ${hasText}`}</p>
+      </div>
     </div>
   );
 };
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <App text={textComponentElement} />
+    <App />
   </React.StrictMode>,
 );
