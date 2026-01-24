@@ -1,6 +1,6 @@
-import * as React from "react";
-import { createRoot } from "react-dom/client";
-import "./index.css";
+import * as React from 'react';
+import { createRoot } from 'react-dom/client';
+import './index.css';
 
 type TChildProps = {
   text: React.ReactElement;
@@ -12,7 +12,7 @@ const staticTextElement: React.ReactElement = <p>Static text</p>;
 
 const Text: React.FC = () => {
   React.useEffect(() => {
-    console.log("-- RERENDER: Text component");
+    console.log('-- RERENDER: Text component');
   });
 
   return <p>Static component with text</p>;
@@ -44,7 +44,7 @@ type TAppProps = {
 
 const App: React.FC<TAppProps> = ({ text }) => {
   const [hasText, setHasText] = React.useState(true);
-  const [inputValue, setInputValue] = React.useState("bob");
+  const [inputValue, setInputValue] = React.useState('bob');
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setInputValue(event.target.value);
@@ -108,8 +108,8 @@ const App: React.FC<TAppProps> = ({ text }) => {
   );
 };
 
-createRoot(document.getElementById("root")!).render(
+createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App text={textComponentElement} />
-  </React.StrictMode>
+  </React.StrictMode>,
 );
