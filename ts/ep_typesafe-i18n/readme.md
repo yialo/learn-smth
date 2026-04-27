@@ -1,3 +1,3 @@
-# paromov_typesafe-i18n
+# ep_typesafe-i18n
 
 [source](https://www.youtube.com/watch?v=PNFOWuYNhoQ)
