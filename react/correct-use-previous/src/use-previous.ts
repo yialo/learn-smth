@@ -37,3 +37,21 @@ export const usePreviousPersistent = <V>(
 
   return state.prev;
 };
+
+// Fairly tracks EVERY render
+
+export const usePrevious = <T>(value: T) => {
+  const previousRef = React.useRef<T | undefined>(undefined);
+  const [previous, setPrevious] = React.useState<T | undefined>(undefined);
+
+  useIsomorphicLayoutEffect(() => {
+    const oldValue = previousRef.current;
+    previousRef.current = value;
+    setPrevious(oldValue);
+  });
+
+  return previous;
+};
+
+const useIsomorphicLayoutEffect =
+  typeof document !== 'undefined' ? React.useLayoutEffect : React.useEffect;
